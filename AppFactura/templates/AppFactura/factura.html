@@ -1,0 +1,240 @@
+{% extends "base/base.html" %}
+{% load static %}   
+{% block content %}  
+
+<div class="container">
+
+    <div class="recuadro uno">
+        <div class="dropdown shop">
+            <nav class="nav nav-masthead justify-content-center float-md-end">
+                {% for facturas in fact %}    
+                {% if facturas.id_tipo_comprobante == 1 %}
+                    <a class="btn btn-secondary dropdown-toggle" href="#"  role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ facturas.nombre }} {{facturas.letra}}
+                {% endif %}
+                {% endfor %}
+                    </a>
+                    <ul class="dropdown-menu" style="color:#fff; background-color:#fff;" aria-labelledby="dropdownMenuLink">
+                    {% for facturas in fact %}
+                        {% if facturas.id_tipo_comprobante >= 2 %}
+                            <li><a class="dropdown-item" style="color:#000" href="">{{ facturas.nombre }} {{ facturas.letra }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+            </nav>
+        </div> 
+    </div>
+
+    <div class="recuadro dos">
+        <button type="button" class="btn btn-warning btn-circle" onclick="mostrarFormCli();">
+            CLIENTES  <i class="fa-solid fa-plus cli"></i>
+        </button><br>
+        <button type="button" class="btn btn-warning btn-circle" onclick="mostrarFormArt();">
+            ARTICULOS  <i class="fa-solid fa-plus"></i>
+        </button><br>
+        <button type="button" class="btn btn-warning btn-circle concept">
+            CONCEPTO  <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
+    
+    <div class="recuadro tres">
+        <h5 class="ddc">DATOS DEL CLIENTE:</h5>
+        <div class="datos">
+            <table class="tablaclientes">
+                    <thead>
+                        <tr>
+                            <th class="celdacliente">RAZÓN/NOMBRE:</th>        
+                            <th class="celdacliente2"> 
+                                {% if request.session.agregarcli.items %}
+                                {% for key, value in request.session.agregarcli.items %}
+                                <h6 class="textcli"> {{ value.razon_nombre }} </h6> 
+                                {% endfor %}
+                                {% endif %}
+                            </th>
+                        </tr>
+                        </thead>
+                        <thead>
+                        <tr>
+                            <th class="celdacliente">CUIT:</th>        
+                            <th class="celdacliente2"> 
+                                {% if request.session.agregarcli.items %}
+                                {% for key, value in request.session.agregarcli.items %}
+                                <h6 class="textcli"> {{ value.cuit }} </h6>
+                                {% endfor %}
+                                {% endif %}
+                            </th>
+                        </tr>
+                        </thead>
+                        <thead>
+                        <tr>
+                            <th class="celdacliente">CONDICIÓN:</th>        
+                            <th class="celdacliente2">
+                                {% if request.session.agregarcli.items %}
+                                {% for key, value in request.session.agregarcli.items %}
+                                <h6 class="textcli"> {{ value.condicion }} </h6>
+                                {% endfor %}
+                                {% endif %}
+                            </th>
+                        </tr>
+                    </thead>
+            </table> 
+        </div>
+    </div>
+
+    <div class="recuadro tabla">
+        <table class="table">
+            <thead class="headtable">
+                <th>Código</th>        
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>U. Medida</th>
+                <th>Precio U.</th>
+                <th>Bonificación</th>
+                <th>Importe</th>
+                <th>% IVA</th>
+                <th>SUBTOTAL</th>
+            </thead>
+            <tbody>
+                {% if request.session.agregar.items %}
+                    {% for key, value in request.session.agregar.items %}
+                    <tr>
+                        <td>{{value.articulo_id}}</td>
+                        <td>{{value.nombre}}</td>
+                        <td>
+                            {{value.cantidad}}
+                            <a href="{% url 'agregar:add' value.articulo_id %}" class="btn btn-sm btn success suma">+</a>
+                            <a href="{% url 'agregar:decrement' value.articulo_id %}" class="btn btn-sm btn success resta">-</a>
+                        </td>
+                        <td>Vacio</td>
+                        <td>{{value.precio}}</td>
+                        <td>Vacio</td>
+                        <td>Vacio</td>
+                        <td>Vacio</td>
+                        <td>{{value.subtotal}}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="12">
+                            <div class="alert alert-danger text-center">
+                                No hay articulos
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="formart" class="recuadro articulos">
+    <div class="row" style="--bs-gutter-x: 0;">
+        <div style="background-color: black">
+            <button type="submit" class="boton btn-danger" style="height: 45px; float: right;" onclick="cerrarArt();">Cerrar</button>
+        </div>
+    </div>
+    <div class="listados">
+        <table class="listadostabla col-md-12 search">
+            <thead>
+                <th>Código</th>        
+                <th>Producto</th>
+                <th>Precio</th>
+            </thead>
+            <tbody>
+                {% if art %} 
+                    {% for arts in art %}
+                        <tr>
+                            <td>{{ arts.id_articulo }}</td>
+                            <td>{{ arts.nombre }}</td>
+                            <td>{{ arts.precio }}</td>
+                            <td><a href="{% url 'agregar:add' arts.id_articulo %}" class="btn btn-success"> + </a></td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row busqueda">
+        <div class="col-md-12 search">
+            <form method="get">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="form-control" style="height: 34px" placeholder="Buscar..." 
+                        name="buscarart" value="{{ request.GET.buscar }}">
+                        <span class="input-group-list">
+                            <i class="icon icon-search"></i>
+                            <button type="submit" class="boton btn-success" style="height: 35px;">Buscar</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="formcli" class="recuadro clientes">
+        <div class="row" style="--bs-gutter-x: 0;">
+            <div style="background-color: black">
+                <button type="submit" class="boton btn-danger" style="height: 45px; float: right;" onclick="cerrarCli();">Cerrar</button>
+            </div>
+        </div>    
+        <div class="listados">
+            <table class="listadostabla col-md-12 search" id="ClienteTabla">
+                <thead>
+                    <th>Razón/Nombre</th>        
+                    <th>CUIT</th>
+                    <th>Condición</th>
+                </thead>
+                <tbody>
+                    {% if cli %} 
+                        {% for clientes in cli %}
+                            <tr>
+                                <td>{{ clientes.razon_nombre }}</td>
+                                <td>{{ clientes.cuit }}</td>
+                                <td>{{ clientes.condicion }}</td>
+                                <td><a href="{% url 'agregarcli:addcli' clientes.id_cliente %}" class="btn btn-success cli"> + </a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>  
+        </div>
+        <div class="row busqueda">
+            <div class="col-md-12 search">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control" placeholder="Buscar..." 
+                            name="buscarcli" value="{{ request.GET.buscar }}">
+                            <span class="input-group-list">
+                                <i class="icon icon-search"></i>
+                                <button type="submit" class="boton btn-success" style="height: 45px;">Buscar</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div> 
+        </div>
+</div>
+
+<script>
+
+    function mostrarFormArt(){
+        document.getElementById('formart').style.display = 'block'
+    }
+
+    function mostrarFormCli(){
+        document.getElementById('formcli').style.display = 'block'
+    }
+
+    function cerrarArt(){
+        document.getElementById('formart').style.display = 'none'
+    }
+
+    function cerrarCli(){
+        document.getElementById('formcli').style.display = 'none'
+    }
+
+</script>
+
+{% endblock %}

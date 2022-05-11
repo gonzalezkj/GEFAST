@@ -1,0 +1,168 @@
+{% extends "base/base.html" %}
+{% load static %}   
+
+{% block title %} <title> Stock </title> {% endblock %}
+
+{% block content %}  
+
+    <section id="seccionstock">
+        <table id="tablastock">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Categoria</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for arts in art %}
+                    {% if arts.categoria_id == 1 %}
+                        <tr class="text-center"></tr>
+                            <td> {{ arts.nombre }} </td>
+                            <td> {{ arts.precio }} </td>
+                            <td> Deportes </td>
+                            <td> {{ arts.cantidad }} </td>      
+                        </tr>
+                    {% endif %}
+                    {% if arts.categoria_id == 2 %}
+                    <tr class="text-center"></tr>
+                        <td> {{ arts.nombre }} </td>
+                        <td> {{ arts.precio }} </td>
+                        <td> Ferreteria </td>
+                        <td> {{ arts.cantidad }} </td>      
+                    </tr>
+                    {% endif %}
+                    {% if arts.categoria_id == 3 %}
+                    <tr class="text-center"></tr>
+                        <td> {{ arts.nombre }} </td>
+                        <td> {{ arts.precio }} </td>
+                        <td> Computación </td>
+                        <td> {{ arts.cantidad }} </td>      
+                    </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <table id="ordenar">
+            <thead>
+                <tr>
+                    <th> Buscar por </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Categoria <button class="bottons" type="submit" onclick="cerrarCate();"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                        <button class="bottons" type="submit" onclick="mostrarCate();"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                        <div class="row bprecio" id="buscarcat" style="margin-top: 10px">
+                            <div class="col-md-10 search">
+                                <form method="get">
+                                    <div id="custom-search-input">
+                                        <div class="input-group col-md-5">
+                                            <input type="text" class="form-control" placeholder="Buscar..." 
+                                            name="buscarcate" value="{{ request.GET.buscar }}">
+                                        </div>
+                                        <span class="input-group-list">
+                                            <i class="icon icon-search"></i>
+                                            <button type="submit" class="boton btn-success" style="margin-top: 10px; border-radius: 5px;">Buscar</button>
+                                        </span> 
+                                    </div>
+                                </form>
+                            </div>
+                        </div>          
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Precio desde <button class="bottons" type="submit" onclick="cerrarPrecio();"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                        <button class="bottons" type="submit" onclick="mostrarPrecio();"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                        <div class="row bprecio" id="buscarprecio" style="margin-top: 10px"> 
+                            <div class="col-md-10 search">
+                                <form method="get">
+                                    <div id="custom-search-input">
+                                        <div class="input-group col-md-5">
+                                            <input type="number" class="form-control" placeholder="Buscar..." 
+                                            name="buscarprecio" value="{{ request.GET.buscar }}">
+                                        </div>
+                                        Hasta
+                                        <div class="input-group col-md-5">
+                                            <input type="number" class="form-control" placeholder="Buscar..." 
+                                            name="buscarprecio2" value="{{ request.GET.buscar }}">
+                                        </div> 
+                                        <span class="input-group-list">
+                                            <i class="icon icon-search"></i>
+                                            <button type="submit" class="boton btn-success" style="margin-top: 10px; border-radius: 5px;">Buscar</button>
+                                        </span> 
+                                    </div>
+                                </form>
+                            </div>
+                        </div>          
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Cantidad <button class="bottons" type="submit" onclick="cerrarCant();"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                        <button class="bottons" type="submit" onclick="mostrarCant();"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                         <div class="row bprecio" id="buscarcantidad" style="margin-top: 10px">
+                            <div class="col-md-10 search">
+                                Min
+                                <form method="get">
+                                    <div id="custom-search-input">
+                                        <div class="input-group col-md-5">
+                                            <input type="number" class="form-control" placeholder="Buscar..." 
+                                            name="buscarcant" value="{{ request.GET.buscar }}">
+                                        </div>
+                                        Max
+                                        <div class="input-group col-md-5">
+                                            <input type="number" class="form-control" placeholder="Buscar..." 
+                                            name="buscarcant2" value="{{ request.GET.buscar }}">
+                                        </div> 
+                                        <span class="input-group-list">
+                                            <i class="icon icon-search"></i>
+                                            <button type="submit" class="boton btn-success" style="margin-top: 10px; border-radius: 5px;">Buscar</button>
+                                        </span> 
+                                    </div>
+                                </form>
+                            </div>
+                        </div>          
+                    </td>
+                </tr>
+                <tr>
+                    <td> Añadir producto</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+<script>
+
+    function mostrarPrecio(){
+        document.getElementById('buscarprecio').style.display = 'block'
+    }
+
+    function mostrarCant(){
+        document.getElementById('buscarcantidad').style.display = 'block'
+    }
+
+    function mostrarCate(){
+        document.getElementById('buscarcat').style.display = 'block'
+    }
+
+    function cerrarPrecio(){
+        document.getElementById('buscarprecio').style.display = 'none'
+    }
+
+    function cerrarCant(){
+        document.getElementById('buscarcantidad').style.display = 'none'
+    }
+    
+    function cerrarCate(){
+        document.getElementById('buscarcat').style.display = 'none'
+    }
+
+</script>
+
+
+{% endblock %}
+

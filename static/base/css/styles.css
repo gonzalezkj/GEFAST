@@ -1,0 +1,237 @@
+.navbar.navbar-expand-lg.navbar-light.bg-light {
+    padding: 20px;
+    background-color: black !important;
+}
+
+.zz {
+    margin-right: 10px;
+    color: white !important;
+}
+
+.yy {
+    border: solid 1px white;
+    border-radius: 3px;
+}
+
+.recuadro {
+    border-radius:4px;
+    border:1px solid #bbb;
+}
+
+.container {
+    margin-top: 100px;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.recuadro.uno{
+    background-color: black;
+    text-align: center;
+}
+
+.recuadro.dos{
+    background-color: black;
+    text-align: center;
+}
+
+.recuadro.tres{
+    background-color: black;
+    text-align: center;
+}
+
+.ddc {
+    color: white;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.datos{
+    margin-left: 10px;
+    text-align: left;
+}
+
+.recuadro.tabla {
+    grid-column-start:1;
+    grid-column-end:4;
+}
+
+.table {
+    background-color: black;
+    color: white;
+    grid-column-start:1;
+    grid-column-end:4;
+}
+
+.recuadro.articulos {
+    display: none;
+    width: 400px;
+    height: 400px;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    border-radius:4px;
+    border:1px solid #bbb;
+    background-color: black;
+}
+
+.row.busqueda {
+    border-radius: 0;
+    bottom: 0px !important;
+    position: absolute;
+    width: -webkit-fill-available;
+}
+
+.recuadro.clientes {
+    display: none;
+    width: 550px;
+    height: 400px;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    border-radius:4px;
+    border:1px solid #bbb;
+    background-color: black;
+}
+
+
+.listadostabla {
+    margin-left: 20px;
+    margin-top: 10px;
+    color:white;
+}
+
+.btn.btn-warning.btn-circle {
+    width: 30%;
+    margin-top: 10px;
+}
+
+.btn.concept {
+    margin-bottom: 10px;
+}
+
+.fa-solid.fa-plus.cli{
+    margin-left: 13px;
+}
+
+.btn.btn-success.cli {
+    margin-right: 20px;
+}
+
+.tablaclientes {
+    margin-left: 20px;
+}
+
+.celdacliente {
+    color:white;
+    width: 170px;
+}
+
+.celdacliente2 {
+    border: solid 2px white;
+    color:white;
+    width: 180px;
+}
+
+.textcli {
+    margin-left: 10px;
+}
+
+.nav.nav-masthead.justify-content-center.float-md-end {
+    padding: 15px;
+    margin-right: 150px;
+}
+
+.headtable {
+    background-color: black;
+    color: white;
+}
+
+.bodybase {
+    background: url("/static/base/img/back2.jpg") no-repeat fixed;
+}
+
+.btn.btn-sm.btn.success.suma {
+    color: white;
+}
+
+.btn.btn-sm.btn.success.resta {
+    color: white;
+}
+
+.logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 7px;
+}
+
+#ordenar {
+    margin-left: 30px;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 30%;
+    background-color: white;
+}
+
+#ordenar td, #ordenar th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#ordenar tr:nth-child(even){background-color: #f2f2f2;}
+#ordenar tr:hover {background-color: #ddd;}
+#ordenar th{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: black;
+    color:white;
+}
+
+#tablastock {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#tablastock td, #tablastock th {
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#tablastock tr:nth-child(even){background-color: white;}
+#tablastock tr:hover{background-color: #ddd;}
+#tablastock th{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: black;
+    color:white;
+}
+
+#seccionstock{
+    margin-top: 80px;
+    margin-left: 400px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.bprecio {
+    display: none;
+}
+
+.busquedatexto {
+    font-family: Verdana;
+}
+
+.bottons {
+    margin-left: 10px;
+    float: right;
+}

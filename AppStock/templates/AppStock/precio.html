@@ -1,0 +1,145 @@
+{% extends "base/base.html" %}
+
+{% load static %}   
+
+{% block title %} <title> Stock </title> {% endblock %}
+
+{% block content %}  
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        #ordenar {
+            margin-left: 30px;
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 30%;
+            background-color: white;
+        }
+
+        #ordenar td, #ordenar th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #ordenar tr:nth-child(even){background-color: #f2f2f2;}
+        #ordenar tr:hover {background-color: #ddd;}
+        #ordenar th{
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: black;
+            color:white;
+        }
+
+        #tablastock {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #tablastock td, #tablastock th {
+            border-radius: 3px;
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #tablastock tr:nth-child(even){background-color: white;}
+        #tablastock tr:hover{background-color: #ddd;}
+        #tablastock th{
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: black;
+            color:white;
+        }
+
+        #seccionstock{
+            margin-top: 80px;
+            margin-left: 400px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 50% 50%;
+        }
+        
+    </style>
+
+</head>
+<body>
+    <section id="seccionstock">
+        <table id="tablastock">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Categoria</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for arts in art %}
+                    {% if arts.categoria_id == 1 %}
+                        {% if arts.precio > 20000 %}
+                            <tr class="text-center"></tr>
+                                <td> {{ arts.nombre }} </td>
+                                <td> {{ arts.precio }} </td>
+                                <td> Deportes </td>
+                                <td> {{ arts.cantidad }} </td>      
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                    {% if arts.categoria_id == 2 %}
+                        {% if arts.precio > 20000 %}
+                            <tr class="text-center"></tr>
+                                <td> {{ arts.nombre }} </td>
+                                <td> {{ arts.precio }} </td>
+                                <td> Ferreteria </td>
+                                <td> {{ arts.cantidad }} </td>      
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                    {% if arts.categoria_id == 3 %}
+                        {% if arts.precio > 20000 %}
+                            <tr class="text-center"></tr>
+                                <td> {{ arts.nombre }} </td>
+                                <td> {{ arts.precio }} </td>
+                                <td> Computación </td>
+                                <td> {{ arts.cantidad }} </td>      
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <table id="ordenar">
+            <thead>
+                <tr>
+                    <th>Ordernar por</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="{% url 'Stock' %}"> Categoria </td></a>
+                </tr>
+                <tr>
+                    <td><a href="{% url 'Precio' %}"> Precio desde </td></a>
+                </tr>
+                <tr>
+                    <td> Min - Max</td>
+                </tr>
+                <tr>
+                    <td> Cantidad</td>
+                </tr>
+                <tr>
+                    <td> Añadir producto</td>
+                </tr>
+            </tbody>
+        </table>
+        </section>
+</body>
+</html>
+
+{% endblock %}
+
