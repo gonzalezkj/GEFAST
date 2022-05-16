@@ -28,6 +28,10 @@
     right: 0;
 }
 
+.container-fluid.inicio {
+    width: 370px;
+}
+
 .recuadro.uno{
     background-color: black;
     text-align: center;
@@ -69,7 +73,6 @@
 .recuadro.articulos {
     display: none;
     width: 400px;
-    height: 400px;
     margin-top: 150px;
     margin-left: auto;
     margin-right: auto;
@@ -80,9 +83,9 @@
 }
 
 .row.busqueda {
+    padding: 20px;
     border-radius: 0;
     bottom: 0px !important;
-    position: absolute;
     width: -webkit-fill-available;
 }
 
@@ -234,4 +237,153 @@
 .bottons {
     margin-left: 10px;
     float: right;
+}
+
+.form-control.stock{
+    float: left !important;
+}
+
+.formularioadd {
+    margin-top: 100px;
+}
+
+.form-group.add{
+    text-align: center;
+}
+
+.form-group.guardar{
+    text-align: center;
+}
+
+.nav-link.stock{
+    display: inline-block;
+}
+
+.addproduct {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px !important;
+    margin: auto;
+    background-color: #198754;
+    border-radius: 5px;
+    padding: 10px;
+    width: 40%;
+}
+
+.contenedorlog {
+    text-align: center;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+.contenedorreg {
+    text-align: center;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+.form-control.login {
+    margin-right: auto;
+    margin-left: auto;
+    width: 70% !important;
+}
+
+.form-control.registro {
+    margin-right: auto;
+    margin-left: auto;
+    width: 100% !important;
+}
+
+.form-control.buscar:focus{
+   box-shadow: none;
+}
+
+.boton.buscar:hover{
+    background-color:#198754;
+
+}
+
+.paginador{
+    display: grid;
+    width: 20px;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+
+}
+
+/* HTML DE ABM */ 
+
+.todo{
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.cuadrado {
+    margin-top: 100px;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 45% 50%;
+}
+
+.botonesabm{
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    height: 40%;
+    border-radius:4px;
+}
+
+
+
+.cuadrado.dos{
+    display: inline-block;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 1fr;
+    margin-top: 0px;
+}
+
+.cuadro {
+    border-radius:4px;
+    border:1px solid #bbb;
+    display: inline-block;
+    display: grid;
+    grid-gap: 20px;
+}
+
+.cuadro.uno{
+    background-color: black;
+    text-align: center;
+    width: 200px;
+    height: 700px;
+    margin-left: auto;
+    align-items: center;
+}
+
+.cuadro.dos{
+    background-color: black;
+    text-align: center;
+    width: 500px;
+    height: 100px;
+}
+
+.cuadro.tres{
+    background-color: black;
+    text-align: center;
+    width: 500px;
+    height: 580px;
+}
+
+.clientesabm {
+    color: white;
+    display: flex;
+}
+
+.headtabledos {
+    background-color: black;
+    color: white;
 }

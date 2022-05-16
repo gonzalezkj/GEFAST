@@ -2,37 +2,35 @@
 {% load static %}   
 {% block content %}  
 
+<style>
+    .botton{
+        padding: 10px;
+    }
+</style>
 <div class="container">
 
     <div class="recuadro uno">
         <div class="dropdown shop">
             <nav class="nav nav-masthead justify-content-center float-md-end">
-                {% for facturas in fact %}    
-                {% if facturas.id_tipo_comprobante == 1 %}
-                    <a class="btn btn-secondary dropdown-toggle" href="#"  role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ facturas.nombre }} {{facturas.letra}}
-                {% endif %}
-                {% endfor %}
-                    </a>
-                    <ul class="dropdown-menu" style="color:#fff; background-color:#fff;" aria-labelledby="dropdownMenuLink">
-                    {% for facturas in fact %}
-                        {% if facturas.id_tipo_comprobante >= 2 %}
-                            <li><a class="dropdown-item" style="color:#000" href="">{{ facturas.nombre }} {{ facturas.letra }}</a></li>
-                        {% endif %}
+                <p>
+                    <select class="form-select" aria-label="Default select example">
+                    {% for facturas in fact %}    
+                        <option>{{ facturas.nombre }} {{facturas.letra}}</option>
                     {% endfor %}
-                    </ul>
+                    </select>  
+                  </p>
             </nav>
         </div> 
     </div>
 
     <div class="recuadro dos">
-        <button type="button" class="btn btn-warning btn-circle" onclick="mostrarFormCli();">
+        <button type="button" class="btn btn-warning btn-circle botton" onclick="mostrarFormCli();">
             CLIENTES  <i class="fa-solid fa-plus cli"></i>
         </button><br>
-        <button type="button" class="btn btn-warning btn-circle" onclick="mostrarFormArt();">
+        <button type="button" class="btn btn-warning btn-circle botton" onclick="mostrarFormArt();">
             ARTICULOS  <i class="fa-solid fa-plus"></i>
         </button><br>
-        <button type="button" class="btn btn-warning btn-circle concept">
+        <button type="button" class="btn btn-warning btn-circle concept botton">
             CONCEPTO  <i class="fa-solid fa-plus"></i>
         </button>
     </div>
@@ -107,7 +105,7 @@
                         </td>
                         <td>Vacio</td>
                         <td>{{value.precio}}</td>
-                        <td>Vacio</td>
+                        <td><input type="number" class="form-control" style="height: 26px; width: 120px;" placeholder="Ej: 10" name="buscarart"></td>
                         <td>Vacio</td>
                         <td>Vacio</td>
                         <td>{{value.subtotal}}</td>
@@ -141,30 +139,56 @@
                 <th>Precio</th>
             </thead>
             <tbody>
-                {% if art %} 
-                    {% for arts in art %}
+                {% if articulos %} 
+                    {% for arts in articulos %}
                         <tr>
                             <td>{{ arts.id_articulo }}</td>
                             <td>{{ arts.nombre }}</td>
                             <td>{{ arts.precio }}</td>
                             <td><a href="{% url 'agregar:add' arts.id_articulo %}" class="btn btn-success"> + </a></td>
                         </tr>
+
                     {% endfor %}
                 {% endif %}
+                
             </tbody>
         </table>
+        <div class="paginador">
+            {% if articulos.has_previous and articulos.has_next %} 
+                <span class="page-item"><a class="page-link" href="?page=1">&laquo FG </a> </span>
+                <span class="page-item"><a class="page-link" href="?page={{ articulos.previous_page_number }}">PR</a> </span>
+                <span class="page-item disabled"><a href="#" class="page-link">Page {{ articulos.number }} of {{ articulos.paginator.num_pages }}</a> </span>
+                <span class="page-item" style="width: 50px"><a class="page-link" href="?page={{ articulos.next_page_number }}">NP </a> </span>
+                <span class="page-item" style="width: 50px"><a class="page-link" href="?page={{ articulos.paginator.num_pages }}">LP &raquo</a> </span>
+                {% else %}
+                    {% if articulos.has_previous %} 
+                        <span class="page-item"><a class="page-link" href="?page=1">&laquo FG </a> </span>
+                        <span class="page-item"><a class="page-link" href="?page={{ articulos.previous_page_number }}">PR</a> </span>
+                        <span class="page-item disabled"><a href="#" class="page-link">Page {{ articulos.number }} of {{ articulos.paginator.num_pages }}</a> </span>
+                        <span class="page-item" style="width: 50px"><a class="page-link" >NP </a> </span>
+                        <span class="page-item" style="width: 50px"><a class="page-link" >LP &raquo</a> </span>
+                    {% endif %}
+                    
+                    {% if articulos.has_next %}
+                        <span class="page-item"><a class="page-link" >&laquo FG </a> </span>
+                        <span class="page-item"><a class="page-link" >PR</a> </span>
+                        <span class="page-item disabled"><a href="#" class="page-link">Page {{ articulos.number }} of {{ articulos.paginator.num_pages }}</a> </span>
+                        <span class="page-item" style="width: 50px"><a class="page-link" href="?page={{ articulos.next_page_number }}">NP </a> </span>
+                        <span class="page-item" style="width: 50px"><a class="page-link" href="?page={{ articulos.paginator.num_pages }}">LP &raquo</a> </span>
+                    {% endif %}
+            {% endif %}
+
+            
+        </div>
     </div>
     <div class="row busqueda">
         <div class="col-md-12 search">
             <form method="get">
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" class="form-control" style="height: 34px" placeholder="Buscar..." 
+                        <input type="text" class="form-control buscar" placeholder="Buscar..." 
                         name="buscarart" value="{{ request.GET.buscar }}">
-                        <span class="input-group-list">
-                            <i class="icon icon-search"></i>
-                            <button type="submit" class="boton btn-success" style="height: 35px;">Buscar</button>
-                        </span>
+                        <button type="submit" class="boton buscar">Buscar</button>
                     </div>
                 </div>
             </form>

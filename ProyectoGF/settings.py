@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
 # Application definition
 
@@ -51,6 +52,13 @@ INSTALLED_APPS = [
     'AppAgregar',
     'AppAgregarCli',
     'AppDirecciones',
+    'AppPerfiles',
+    'AppABM',
+    
+    #Django external apps
+    'bootstrap4',
+    'crispy_forms',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +148,7 @@ MEDIA_ROOT=BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'Home'
+LOGOUT_REDIRECT_URL = 'login'
+

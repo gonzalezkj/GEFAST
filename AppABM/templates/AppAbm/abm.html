@@ -1,0 +1,67 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+{% block content %}  
+
+<div class="todo">
+    <div class="cuadrado">
+        <div class="cuadro uno">
+            <button type="button" class="botonesabm uno">
+                CLIENTE
+            </button>
+            <button type="button" class="botonesabm">
+                PROVEEDOR 
+            </button>
+            <button type="button" class="botonesabm">
+                ARTICULO 
+            </button>
+            <button type="button" class="botonesabm">
+                CATEGORIA 
+            </button>
+            <button type="button" class="botonesabm">
+                USUARIO 
+            </button>
+            <button type="button" class="botonesabm">
+                ROL 
+            </button>
+        </div>
+
+        <div class="cuadrado dos">
+            <div class="cuadro dos">
+                <button type="button" class="botonagregar">
+                    <a class="nav-link stock {% if '/agregar/' in request.path %} active {% endif %} prueba" aria-current="page" href="{% url 'agregar_cliente' %}"> AGREGAR</a>
+                </button>
+            </div>
+
+            <div class="cuadro tres">
+                <table>
+                    <thead class="headtabledos">
+                        <th  class="span-3">ID</th>        
+                        <th  class="span-3">CUIT</th>
+                        <th  class="span-3">RAZÓN/NOMBRE</th>
+                        <th  class="span-3">M/E</th>
+                    </thead>
+                    <tbody>
+                    {% if cli %}
+                        {% for clientes in cli %}
+                        <tr class="clientesabm">
+                            <td>{{ clientes.id_cliente }}</td>        
+                            <td>{{ clientes.cuit }}</td>
+                            <td>{{ clientes.razon_nombre }}</td>
+                            <td>
+                                <button type="button">M</button>
+                                <button type="button">E</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

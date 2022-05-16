@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include('AppBase.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('register/', include('AppPerfiles.urls')),
     path('factura/', include('AppFactura.urls')),
     path('nota/', include('AppNota.urls')),
     path('stock/', include('AppStock.urls')),
@@ -29,5 +31,6 @@ urlpatterns = [
     path('articulos/', include('AppArticulos.urls')),
     path('agregar/', include('AppAgregar.urls')),
     path('agregarcli/', include('AppAgregarCli.urls')),
+    path('abm/', include('AppABM.urls')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
