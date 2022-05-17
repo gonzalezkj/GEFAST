@@ -387,3 +387,51 @@
     background-color: black;
     color: white;
 }
+
+.titulotabla{
+    display: inline-block;
+    width: 25%;
+}
+
+.contenidotabla {
+    display: inline-block;
+    width: 25%;
+}
+
+.proveedorabm {
+    color: white;
+    display: flex;
+}
+
+.headtabledospr {
+    background-color: black;
+    color: white;
+}
+
+.titulotablapr {
+    display: table-cell;
+}
+
+.contenidotablapr {
+    display: table-cell;
+}
+
+.articulosabm {
+    color: white;
+    display: flex;
+}
+
+.headtabledosar {
+    background-color: black;
+    color: white;
+}
+
+.titulotablaar{
+    display: inline-block;
+    width: 20%;
+}
+
+.contenidotablaar {
+    display: inline-block;
+    width: 20%;
+}

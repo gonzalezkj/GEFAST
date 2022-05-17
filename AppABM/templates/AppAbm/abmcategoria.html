@@ -1,0 +1,67 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+{% block content %}  
+
+<div class="todo">
+    <div class="cuadrado">
+        <div class="cuadro uno">
+            <button type="button" class="botonesabm uno">
+                <a href="{% url 'Abm' %}">CLIENTE</a> 
+            </button>
+            <button type="button" class="botonesabm">
+                <a href="{% url 'abmproveedor' %}">PROVEEDOR</a> 
+            </button>
+            <button type="button" class="botonesabm">
+                <a href="{% url 'abmarticulo' %}">ARTICULO</a> 
+            </button>
+            <button type="button" class="botonesabm">
+                CATEGORIA 
+            </button>
+            <button type="button" class="botonesabm">
+                USUARIO 
+            </button>
+            <button type="button" class="botonesabm">
+                ROL 
+            </button>
+        </div>
+
+        <div class="cuadrado dos">
+            <div class="cuadro dos">
+                <button type="button" class="botonagregar">
+                    <a class="nav-link stock {% if '/agregar/' in request.path %} active {% endif %} prueba" aria-current="page" href="{% url 'agregar_proveedor' %}"> AGREGAR</a>
+                </button>
+            </div>
+
+            <div class="cuadro tres">
+                <table>
+                    <thead class="headtabledospr">
+                        <tr>
+                            <th class="titulotablapr">ID</th>        
+                            <th class="titulotablapr">NOMBRE</th>
+                            <th class="titulotablaar">M/E</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if cat %}
+                            {% for categorias in cat %}
+                            <tr class="proveedorabm">
+                                <td class="contenidotablapr">{{ categorias.id_categoria }}</td>        
+                                <td class="contenidotablapr">{{ categorias.nombre }}</td>
+                                <td class="contenidotablapr">
+                                    <a href="{% url 'modificar_categoria' categorias.id_categoria %}" class="btn btn-success" style="font-size: 70%;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="{% url 'modificar_categoria' categorias.id_categoria %}" class="btn btn-danger" style="font-size: 70%;"><i class="fa-solid fa-trash-can"></i></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

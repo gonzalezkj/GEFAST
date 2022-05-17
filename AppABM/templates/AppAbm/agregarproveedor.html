@@ -1,0 +1,43 @@
+{% extends "base/base.html" %}
+{% load widget_tweaks %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% load static %}   
+
+
+{% block content %}  
+
+    <form method="post" class="formularioadd" enctype="multipart/form-data">
+        <h6 class="addproduct"> Agregar proveedor. </h6>
+        {% csrf_token %}
+
+        {% for field in form.visible_fields %}
+            <div class="form-group add" style="width: 40%; margin:auto;">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field|add_class:'form-control' }}
+                {% if messages %}
+                  {% for m in messages %}
+                    <script>
+                        Swal.fire({
+                          "title":"Message",
+                          "text":"{{m}}",
+                          "icon":"success",
+                        })
+                    </script>   
+                  {% endfor %}
+                {% endif %}
+                {% for error in field.errors %}
+                <span class="help-block">{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+            <div class="form-group guardar">
+                <button type="submit" class="btn btn-success" style="margin-top: 15px">
+                <span class="glyphicon glyphicon-ok"></span> Guardar
+                </button>
+            </div>
+    </form>
+
+{% endblock %}

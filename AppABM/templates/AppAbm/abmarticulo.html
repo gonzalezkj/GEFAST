@@ -1,0 +1,71 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+{% block content %}  
+
+<div class="todo">
+    <div class="cuadrado">
+        <div class="cuadro uno">
+            <button type="button" class="botonesabm uno">
+                <a href="{% url 'Abm' %}">CLIENTE</a> 
+            </button>
+            <button type="button" class="botonesabm">
+                <a href="{% url 'abmproveedor' %}">PROVEEDOR</a> 
+            </button>
+            <button type="button" class="botonesabm">
+                ARTICULO 
+            </button>
+            <button type="button" class="botonesabm">
+                <a href="{% url 'abmcategoria' %}">CATEGORIA</a> 
+            </button>
+            <button type="button" class="botonesabm">
+                USUARIO 
+            </button>
+            <button type="button" class="botonesabm">
+                ROL 
+            </button>
+        </div>
+
+        <div class="cuadrado dos">
+            <div class="cuadro dos">
+                <button type="button" class="botonagregar">
+                    <a class="nav-link stock {% if '/agregar/' in request.path %} active {% endif %} prueba" aria-current="page" href="{% url 'agregar_articulo' %}"> AGREGAR</a>
+                </button>
+            </div>
+
+            <div class="cuadro tres">
+                <table>
+                    <thead class="headtabledosar">
+                        <tr>
+                            <th class="titulotablaar">ID</th>        
+                            <th class="titulotablaar">CANTIDAD</th>
+                            <th class="titulotablaar">NOMBRE</th>
+                            <th class="titulotablaar">PRECIO</th>
+                            <th class="titulotablaar">M/E</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if art %}
+                            {% for articulos in art %}
+                            <tr class="articulosabm">
+                                <td class="contenidotablaar">{{ articulos.id_articulo }}</td>        
+                                <td class="contenidotablaar">{{ articulos.cantidad }}</td>
+                                <td class="contenidotablaar">{{ articulos.nombre }}</td>
+                                <td class="contenidotablaar">{{ articulos.precio }}</td>
+                                <td class="contenidotablaar">
+                                    <a href="{% url 'modificar_articulo' articulos.id_articulo %}" class="btn btn-success" style="font-size: 70%;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="{% url 'modificar_cliente' articulos.id_articulo %}" class="btn btn-danger" style="font-size: 70%;"><i class="fa-solid fa-trash-can"></i></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

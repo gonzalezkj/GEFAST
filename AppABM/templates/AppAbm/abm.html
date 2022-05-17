@@ -11,13 +11,13 @@
                 CLIENTE
             </button>
             <button type="button" class="botonesabm">
-                PROVEEDOR 
+                <a href="{% url 'abmproveedor' %}">PROVEEDOR</a> 
             </button>
             <button type="button" class="botonesabm">
-                ARTICULO 
+                <a href="{% url 'abmarticulo' %}">ARTICULO</a> 
             </button>
             <button type="button" class="botonesabm">
-                CATEGORIA 
+                <a href="{% url 'abmcategoria' %}">CATEGORIA</a> 
             </button>
             <button type="button" class="botonesabm">
                 USUARIO 
@@ -37,21 +37,23 @@
             <div class="cuadro tres">
                 <table>
                     <thead class="headtabledos">
-                        <th  class="span-3">ID</th>        
-                        <th  class="span-3">CUIT</th>
-                        <th  class="span-3">RAZÓN/NOMBRE</th>
-                        <th  class="span-3">M/E</th>
+                        <tr>
+                            <th class="titulotabla">ID</th>        
+                            <th class="titulotabla">CUIT</th>
+                            <th class="titulotabla">RAZÓN/NOMBRE</th>
+                            <th class="titulotabla">M/E</th>
+                        </tr>
                     </thead>
                     <tbody>
                     {% if cli %}
                         {% for clientes in cli %}
                         <tr class="clientesabm">
-                            <td>{{ clientes.id_cliente }}</td>        
-                            <td>{{ clientes.cuit }}</td>
-                            <td>{{ clientes.razon_nombre }}</td>
-                            <td>
-                                <button type="button">M</button>
-                                <button type="button">E</button>
+                            <td class="contenidotabla">{{ clientes.id_cliente }}</td>        
+                            <td class="contenidotabla">{{ clientes.cuit }}</td>
+                            <td class="contenidotabla">{{ clientes.razon_nombre }}</td>
+                            <td class="contenidotabla">
+                                <a href="{% url 'modificar_cliente' clientes.id_cliente %}" class="btn btn-success" style="font-size: 70%;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{% url 'modificar_cliente' clientes.id_cliente %}" class="btn btn-danger" style="font-size: 70%;"><i class="fa-solid fa-trash-can"></i></a>
                             </td>
                         </tr>
                         {% endfor %}
