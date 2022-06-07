@@ -20,8 +20,8 @@ class Agregar:
             for key, value in self.agregar.items():
                 if key == str(articulo.id_articulo):
                     value["cantidad"] = value["cantidad"] + 1
-                    value["precio"]=float(value["precio"])
-                    value["subtotal"]=float(value["subtotal"])+articulo.precio
+                    value["precio"] = float(value["precio"])
+                    value["subtotal"] = float(value["subtotal"])+articulo.precio
                     break 
         self.save()
 

@@ -51,9 +51,11 @@ INSTALLED_APPS = [
     'AppArticulos',
     'AppAgregar',
     'AppAgregarCli',
+    'AppAgregarF',
     'AppDirecciones',
     'AppPerfiles',
     'AppABM',
+    'AppOrdenes',
     
     #Django external apps
     'bootstrap4',

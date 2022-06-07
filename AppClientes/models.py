@@ -2,7 +2,7 @@ from django.db import models
 
 class CondicionFiscal(models.Model):
     id_condicion_fiscal = models.IntegerField(primary_key = True)
-    condicion_fiscal=models.CharField(max_length=50)
+    condicion_fiscal=models.CharField('Condicion', max_length=50)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
 
@@ -14,11 +14,11 @@ class CondicionFiscal(models.Model):
         return self.condicion_fiscal
 
 class Clientes(models.Model):
-    id_cliente = models.IntegerField(primary_key = True)
+    id_cliente = models.IntegerField('Nro de ID',primary_key = True)
     cuit=models.PositiveIntegerField()
-    razon_nombre=models.CharField(max_length=50)
+    razon_nombre=models.CharField('Razon o nombre', max_length=50)
     condicion=models.ForeignKey(CondicionFiscal, on_delete=models.CASCADE)
-    telefono=models.PositiveIntegerField()
+    telefono=models.PositiveIntegerField('Teléfono')
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now_add=True)
 

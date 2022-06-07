@@ -8,17 +8,42 @@
     }
 </style>
 <div class="container">
-
+    <form action="{% url 'procesar_venta' %}" class="formulariofactura" method="GET">
     <div class="recuadro uno">
-        <div class="dropdown shop">
+        <div class="centrar">
+            <div class="dropdown shop">
+                <nav class="nav nav-masthead justify-content-center float-md-end">
+                    <div class="recuadro fact">
+                        <button type="button" onclick="mostrarFormFact();">
+                            Tipo Comprobante
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    {% if request.session.agregarf.items %}
+                                        {% for key, value in request.session.agregarf.items %}
+                                            <h6 class="textcli" style="color:white"> {{ value.nombre }} {{ value.letra }} </h6> 
+                                        {% endfor %}
+                                    {% endif %}
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </nav>
+            </div> 
+        </div>
+        <div class="centrar">
             <nav class="nav nav-masthead justify-content-center float-md-end">
-                <p>
-                    <select class="form-select" aria-label="Default select example">
-                    {% for facturas in fact %}    
-                        <option>{{ facturas.nombre }} {{facturas.letra}}</option>
+                <p style="color:white">
+                    Punto de venta:
+                    <select name="puntonumero" class="form-select" aria-label="Default select example">
+                    {% for x in puntos %}    
+                        <option>{{ x.numero }}</option>
                     {% endfor %}
                     </select>  
-                  </p>
+                </p>
             </nav>
         </div> 
     </div>
@@ -28,7 +53,7 @@
             CLIENTES  <i class="fa-solid fa-plus cli"></i>
         </button><br>
         <button type="button" class="btn btn-warning btn-circle botton" onclick="mostrarFormArt();">
-            ARTICULOS  <i class="fa-solid fa-plus"></i>
+            ARTICULOS <i class="fa-solid fa-plus"></i>
         </button><br>
         <button type="button" class="btn btn-warning btn-circle concept botton">
             CONCEPTO  <i class="fa-solid fa-plus"></i>
@@ -94,34 +119,52 @@
             </thead>
             <tbody>
                 {% if request.session.agregar.items %}
-                    {% for key, value in request.session.agregar.items %}
-                    <tr>
-                        <td>{{value.articulo_id}}</td>
-                        <td>{{value.nombre}}</td>
-                        <td>
-                            {{value.cantidad}}
-                            <a href="{% url 'agregar:add' value.articulo_id %}" class="btn btn-sm btn success suma">+</a>
-                            <a href="{% url 'agregar:decrement' value.articulo_id %}" class="btn btn-sm btn success resta">-</a>
-                        </td>
-                        <td>Vacio</td>
-                        <td>{{value.precio}}</td>
-                        <td><input type="number" class="form-control" style="height: 26px; width: 120px;" placeholder="Ej: 10" name="buscarart"></td>
-                        <td>Vacio</td>
-                        <td>Vacio</td>
-                        <td>{{value.subtotal}}</td>
-                    </tr>
-                    {% endfor %}
+                {% for key, value in request.session.agregar.items %}
+                <tr>
+                    <td>{{value.articulo_id}}</td>
+                    <td>{{value.nombre}}</td>
+                    <td>
+                    </td>
+                    <td>Vacio</td>
+                    <td>{{value.precio}}</td>
+                    <td><input type="number" min="0" class="form-control" style="height: 26px; width: 120px;" placeholder="Ej: 10" name="bonif" value="{{ request.GET.bonif }}"></td>
+                    <td>Vacio</td>
+                    {% if request.session.agregarf.items %}
+                        {% for key, value in request.session.agregarf.items %}
+                            {% if value.factura_id == 1 or value.factura_id == 2 or value.factura_id == 3 %}
+                                <td> 21 </td>
+                            {% else %} 
+                                <td> Exento </td>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <td style="text-align: center;"> - </td>
+                    {% endif %}
+                    <td>{{value.subtotal}}</td>
+                </tr>
+                {% endfor %}
                 {% else %}
-                    <tr>
-                        <td colspan="12">
-                            <div class="alert alert-danger text-center">
-                                No hay articulos
-                            </div>
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="12">
+                        <div class="alert alert-danger text-center">
+                            No hay articulos
+                        </div>
+                    </td>
+                </tr>
                 {% endif %}
             </tbody>
+            <tfoot>
+                <tr>        
+                    <td colspan="3">
+                        {% if request.session.agregar.items and request.session.agregarcli.items %}
+                            <button type="submit" class="btn btn-success"><a href="{% url 'agregar:clear' %}" style="color: white" > Vaciar factura </a></button>
+                            <button type="submit" class="btn btn-success"> Crear orden </button>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tfoot>
         </table>
+        </form>
     </div>
 </div>
 
@@ -145,6 +188,7 @@
                             <td>{{ arts.id_articulo }}</td>
                             <td>{{ arts.nombre }}</td>
                             <td>{{ arts.precio }}</td>
+                            <td><input type="number" min="1" value="1" class="form-control" style="height: 26px; width: 120px;" placeholder="Ej: 10" name="canti" value="{{ request.GET.canti }}"></td>
                             <td><a href="{% url 'agregar:add' arts.id_articulo %}" class="btn btn-success"> + </a></td>
                         </tr>
 
@@ -153,33 +197,27 @@
                 
             </tbody>
         </table>
+
         <div class="paginador">
             {% if articulos.has_previous and articulos.has_next %} 
-                <span class="page-item"><a class="page-link" href="?page=1">&laquo FG </a> </span>
-                <span class="page-item"><a class="page-link" href="?page={{ articulos.previous_page_number }}">PR</a> </span>
-                <span class="page-item disabled"><a href="#" class="page-link">Page {{ articulos.number }} of {{ articulos.paginator.num_pages }}</a> </span>
-                <span class="page-item" style="width: 50px"><a class="page-link" href="?page={{ articulos.next_page_number }}">NP </a> </span>
-                <span class="page-item" style="width: 50px"><a class="page-link" href="?page={{ articulos.paginator.num_pages }}">LP &raquo</a> </span>
+                <span class="page-item"><a class="page-link" href="?page={{ articulos.previous_page_number }}">Anterior</a> </span>
+                <span class="page-item disabled"><a href="#" class="page-link"> {{ articulos.number }} de {{ articulos.paginator.num_pages }}</a> </span>
+                <span class="page-item" ><a class="page-link" href="?page={{ articulos.next_page_number }}">Siguiente </a> </span>
                 {% else %}
                     {% if articulos.has_previous %} 
-                        <span class="page-item"><a class="page-link" href="?page=1">&laquo FG </a> </span>
-                        <span class="page-item"><a class="page-link" href="?page={{ articulos.previous_page_number }}">PR</a> </span>
-                        <span class="page-item disabled"><a href="#" class="page-link">Page {{ articulos.number }} of {{ articulos.paginator.num_pages }}</a> </span>
-                        <span class="page-item" style="width: 50px"><a class="page-link" >NP </a> </span>
-                        <span class="page-item" style="width: 50px"><a class="page-link" >LP &raquo</a> </span>
+                        <span class="page-item"><a class="page-link" href="?page={{ articulos.previous_page_number }}">Anterior</a> </span>
+                        <span class="page-item disabled"><a href="#" class="page-link"> {{ articulos.number }} de {{ articulos.paginator.num_pages }}</a> </span>
+                        <span class="page-item"><a class="page-link" >Siguiente </a> </span>
                     {% endif %}
                     
                     {% if articulos.has_next %}
-                        <span class="page-item"><a class="page-link" >&laquo FG </a> </span>
-                        <span class="page-item"><a class="page-link" >PR</a> </span>
-                        <span class="page-item disabled"><a href="#" class="page-link">Page {{ articulos.number }} of {{ articulos.paginator.num_pages }}</a> </span>
-                        <span class="page-item" style="width: 50px"><a class="page-link" href="?page={{ articulos.next_page_number }}">NP </a> </span>
-                        <span class="page-item" style="width: 50px"><a class="page-link" href="?page={{ articulos.paginator.num_pages }}">LP &raquo</a> </span>
+                        <span class="page-item"><a class="page-link" >Anterior</a> </span>
+                        <span class="page-item disabled"><a href="#" class="page-link"> {{ articulos.number }} de {{ articulos.paginator.num_pages }}</a> </span>
+                        <span class="page-item"><a class="page-link" href="?page={{ articulos.next_page_number }}">Siguiente </a> </span>
                     {% endif %}
-            {% endif %}
-
-            
+            {% endif %}      
         </div>
+        
     </div>
     <div class="row busqueda">
         <div class="col-md-12 search">
@@ -221,7 +259,7 @@
                         {% endfor %}
                     {% endif %}
                 </tbody>
-            </table>  
+            </table> 
         </div>
         <div class="row busqueda">
             <div class="col-md-12 search">
@@ -241,14 +279,56 @@
         </div>
 </div>
 
+
+<div id="formfact" class="recuadro facturas">
+    <div class="row" style="--bs-gutter-x: 0;">
+        <div style="background-color: black">
+            <button type="submit" class="boton btn-danger" style="height: 45px; float: right;" onclick="cerrarFact();">Cerrar</button>
+        </div>
+    </div>    
+    <div class="listados">
+        <table class="listadostabla col-md-12 search">
+            <thead>
+                <th style="color:white">Tipo comprobante</th>        
+            </thead>
+            <tbody>
+                {% if fact %} 
+                    {% for facturas in fact %}
+                        <tr>
+                            <td style="color:white">{{ facturas.nombre }} {{ facturas.letra }} </td>
+                            <td><a href="{% url 'agregarf:addf' facturas.id_tipo_comprobante %}" class="btn btn-success cli"> + </a></td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table> 
+    </div>
+</div>
+
 <script>
 
     function mostrarFormArt(){
-        document.getElementById('formart').style.display = 'block'
+        if ((document.getElementById('formcli').style="display:none") && (document.getElementById('formfact').style="display:none")  || (document.getElementById('formfact').style="display:none" || (document.getElementById('formcli').style="display:none"))){
+            document.getElementById('formart').style.display = 'block'
+        } else {
+            document.getElementById('formart').style.display = 'none'
+        }
     }
 
     function mostrarFormCli(){
-        document.getElementById('formcli').style.display = 'block'
+        if ((document.getElementById('formfact').style="display:none") && (document.getElementById('formart').style="display:none") || (document.getElementById('formart').style="display:none") || (document.getElementById('formfact').style="display:none")){
+            document.getElementById('formcli').style.display = 'block'
+        } else {
+            document.getElementById('formcli').style.display = 'none'
+        }
+    }
+
+    function mostrarFormFact(){
+        if ((document.getElementById('formcli').style="display:none") && (document.getElementById('formart').style="display:none") || (document.getElementById('formart').style="display:none") || (document.getElementById('formcli').style="display:none")){
+            document.getElementById('formfact').style.display = 'block'
+        } else {
+            document.getElementById('formfact').style.display = 'none'
+        }
     }
 
     function cerrarArt(){
@@ -257,6 +337,10 @@
 
     function cerrarCli(){
         document.getElementById('formcli').style.display = 'none'
+    }
+
+    function cerrarFact(){
+        document.getElementById('formfact').style.display = 'none'
     }
 
 </script>

@@ -21,10 +21,10 @@ class ProveedorDirecciones(models.Model):
 class Proveedores(models.Model):
     id_proveedor = models.IntegerField(primary_key = True)
     cuit = models.PositiveIntegerField()
-    razon_social = models.CharField(max_length=30)
+    razon_social = models.CharField('Razón social', max_length=30)
     condicion = models.ForeignKey(CondicionFiscal, on_delete=models.CASCADE)
-    telefono = models.CharField(max_length=30)
-    email = models.EmailField()
+    telefono = models.CharField('Teléfono', max_length=30)
+    email = models.EmailField('Email')
     id_proveedorDirecciones = models.ForeignKey(ProveedorDirecciones, on_delete = models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)

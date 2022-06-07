@@ -1,0 +1,73 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+{% block content %}  
+
+<div class="todo">
+    <div class="cuadrado">
+        <div class="cuadro uno">
+            <button type="button" class="botonesabm uno">
+                <a href="{% url 'Abm' %}">CLIENTE</a> 
+            </button>
+            <button type="button" class="botonesabm">
+                <a href="{% url 'abmproveedor' %}">PROVEEDOR</a> 
+            </button>
+            <button type="button" class="botonesabm">
+                <a href="{% url 'abmarticulo' %}">ARTICULO</a> 
+            </button>
+            <button type="button" class="botonesabm">
+                <a href="{% url 'abmcategoria' %}">CATEGORIA</a> 
+            </button>
+            <button type="button" class="botonesabm">
+                USUARIO 
+            </button>
+            <button type="button" class="botonesabm">
+                ROL 
+            </button>
+        </div>
+
+        <div class="cuadrado dos">
+            <div class="cuadro dos">
+                <button type="button" class="botonagregar">
+                    <a class="nav-link stock {% if '/agregar/' in request.path %} active {% endif %} prueba" aria-current="page" href="{% url 'agregar_usuario' %}"> AGREGAR</a>
+                </button>
+            </div>
+
+            <div class="cuadro tres">
+                <table>
+                    <thead class="headtabledosus">
+                        <tr>
+                            <th class="titulotablaus">ID</th>        
+                            <th class="titulotablaus">USUARIO</th>
+                            <th class="titulotablaus">NOMBRE</th>
+                            <th class="titulotablaus">APELLIDO</th>
+                            <th class="titulotablaus">EMAIL</th>
+                            <th class="titulotablaus">M/E</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if user %}
+                            {% for usuarios in user %}
+                            <tr class="usuarioabm">
+                                <td class="contenidotablaus">{{ usuarios.id }}</td>        
+                                <td class="contenidotablaus">{{ usuarios.username }}</td>
+                                <td class="contenidotablaus">{{ usuarios.first_name }}</td>
+                                <td class="contenidotablaus">{{ usuarios.last_name }}</td>
+                                <td class="contenidotablaus"></td>
+                                <td class="contenidotablaus">
+                                    <a href="{% url 'modificar_usuario' usuarios.id %}" class="btn btn-success" style="font-size: 70%;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="{% url 'modificar_usuario' usuarios.id %}" class="btn btn-danger" style="font-size: 70%;"><i class="fa-solid fa-trash-can"></i></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

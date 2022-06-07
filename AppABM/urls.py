@@ -6,6 +6,7 @@ urlpatterns = [
     path('abmproveedor/', views.abmproveedor, name="abmproveedor"),
     path('abmarticulo/', views.abmarticulo, name="abmarticulo"),
     path('abmcategoria/', views.abmcategoria, name="abmcategoria"),
+    path('abmusuario/', views.abmusuario, name="abmusuario"),
     path('agregarcliente/', views.agregar_cliente, name="agregar_cliente"),
     path('modificarcliente/<id>', views.modificar_cliente, name="modificar_cliente"),
     path('agregarproveedor/', views.agregar_proveedor, name="agregar_proveedor"),
@@ -14,4 +15,6 @@ urlpatterns = [
     path('modificararticulo/<id>', views.modificar_articulo, name="modificar_articulo"),
     path('agregarcategoria/', views.agregar_categoria, name="agregar_categoria"),
     path('modificarcategoria/<id>', views.modificar_categoria, name="modificar_categoria"),
+    path('agregarusuario/', views.agregar_usuario, name="agregar_usuario"),
+    path('modificarusuario/<id>', views.modificar_usuario, name="modificar_usuario"),
 ]

@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
-from AppABM.forms import ArticuloForm, ArticuloModificarForm, CategoriaForm, CategoriaModificarForm, ClienteForm, ClienteModificarForm, ProveedorForm, ProveedorModificarForm
+from AppABM.forms import ArticuloForm, ArticuloModificarForm, CategoriaForm, CategoriaModificarForm, ClienteForm, ClienteModificarForm, ProveedorForm, ProveedorModificarForm, UsuarioForm, UsuarioModificarForm
 from AppClientes.models import Clientes
 from AppProveedores.models import Proveedores
 from django.contrib import messages
 from AppProveedores.models import Proveedores
 from AppArticulos.models import Articulo, Categoria
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -29,6 +30,11 @@ def abmarticulo(request):
 def abmcategoria(request): 
     categoria = Categoria.objects.all()
     return render(request, "AppABM/abmcategoria.html", {"cat":categoria})
+
+@login_required
+def abmusuario(request): 
+    usuario = User.objects.all()
+    return render(request, "AppABM/abmusuario.html", {"user":usuario})
 
 @login_required
 def agregar_cliente(request):
@@ -106,7 +112,7 @@ def modificar_proveedor(request, id):
 def agregar_articulo(request):
 
     data = {
-        'form': ProveedorForm()
+        'form': ArticuloForm()
     }
 
     if request.method == 'POST':
@@ -173,3 +179,39 @@ def modificar_categoria(request, id):
             data["form"] = formulario
         
     return render(request, 'AppABM/modificarcategoria.html', data)
+
+@login_required
+def agregar_usuario(request):
+
+    data = {
+        'form': UsuarioForm()
+    }
+
+    if request.method == 'POST':
+        formulario = UsuarioForm(data=request.POST, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "El usuario se añadio correctamente")
+        else:
+            data["form"] = formulario
+            
+    return render(request, 'AppABM/agregarusuario.html', data)
+
+@login_required
+def modificar_usuario(request, id):
+
+    producto = get_object_or_404(User, id=id)
+
+    data = {
+        'form': UsuarioModificarForm(instance=producto)
+    }
+
+    if request.method == 'POST':
+        formulario = UsuarioModificarForm(data=request.POST, instance=producto, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "El usuario se modifico correctamente")
+        else:
+            data["form"] = formulario
+        
+    return render(request, 'AppABM/modificarusuario.html', data)

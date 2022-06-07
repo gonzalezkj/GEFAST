@@ -5,7 +5,7 @@ from django.db import models
 
 class Categoria(models.Model):
     id_categoria = models.IntegerField(primary_key = True)
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField('Categoria', max_length=50)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
 
@@ -18,11 +18,11 @@ class Categoria(models.Model):
 
 class Articulo(models.Model):
     id_articulo=models.IntegerField(primary_key = True)
-    nombre=models.CharField(max_length=50)
+    nombre=models.CharField('Nombre', max_length=50)
     categoria=models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    precio=models.FloatField()
+    precio=models.FloatField('Precio')
     disponibilidad=models.BooleanField(default=True)
-    cantidad=models.IntegerField()
+    cantidad=models.IntegerField('Cantidad')
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now_add=True)
 

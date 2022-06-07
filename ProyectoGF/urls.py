@@ -31,6 +31,7 @@ urlpatterns = [
     path('articulos/', include('AppArticulos.urls')),
     path('agregar/', include('AppAgregar.urls')),
     path('agregarcli/', include('AppAgregarCli.urls')),
+    path('agregarf/', include('AppAgregarF.urls')),
     path('abm/', include('AppABM.urls')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
