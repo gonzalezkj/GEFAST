@@ -47,6 +47,8 @@ class Localidades(models.Model):
 class Direcciones(models.Model):
     id_direccion = models.IntegerField(primary_key = True) 
     id_localidad = models.ForeignKey(Localidades, on_delete=models.CASCADE)
+    id_provincia = models.ForeignKey(Provincias, on_delete=models.CASCADE)
+    id_pais = models.ForeignKey(Paises, on_delete=models.CASCADE)
     calle = models.CharField(max_length=40)
     numero = models.PositiveIntegerField()
     created = models.DateTimeField(auto_now_add=True)

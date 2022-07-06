@@ -8,13 +8,15 @@ class Agregar:
         self.agregar = agregar
 
     def add(self, articulo):
+        a = 1
         if (str(articulo.id_articulo) not in self.agregar.keys()):
             self.agregar[articulo.id_articulo] = {
                 "articulo_id": articulo.id_articulo,
                 "nombre": articulo.nombre,
-                "cantidad": articulo.cantidad,
+                "cantidad": a,
+                "totalcant": a*articulo.precio*21/100+articulo.precio,
                 "precio": str(articulo.precio),
-                "subtotal": float(articulo.precio)*float(articulo.cantidad),
+                "subtotal": float(articulo.precio)*float(a),
             }
         else:
             for key, value in self.agregar.items():
@@ -22,6 +24,7 @@ class Agregar:
                     value["cantidad"] = value["cantidad"] + 1
                     value["precio"] = float(value["precio"])
                     value["subtotal"] = float(value["subtotal"])+articulo.precio
+                    value["totalcant"] = float(value["totalcant"])+articulo.precio*1.21
                     break 
         self.save()
 
@@ -39,7 +42,8 @@ class Agregar:
         for key, value in self.agregar.items():
             if key == str(articulo.id_articulo):
                 value["cantidad"] = value["cantidad"] - 1
-                value["subtotal"]=float(value["subtotal"])-articulo.precio
+                value["subtotal"] = float(value["subtotal"])-articulo.precio
+                value["totalcant"] = float(value["totalcant"])-articulo.precio*1.21
                 if value["cantidad"] < 1:
                     self.remove(articulo)
                 else:

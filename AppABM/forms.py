@@ -17,7 +17,7 @@ class ClienteModificarForm(forms.ModelForm):
 class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedores
-        fields = ['razon_social', 'cuit', 'condicion', 'telefono', 'email', 'id_proveedorDirecciones']
+        fields = ['razon_social', 'cuit', 'condicion', 'telefono', 'email', 'direccion']
 
 class ProveedorModificarForm(forms.ModelForm):
     class Meta:

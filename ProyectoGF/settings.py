@@ -45,12 +45,14 @@ INSTALLED_APPS = [
     'AppStock',
     'AppReportes',
     'AppFactura',
+    'AppFacturaV',
     'AppNota',
     'AppClientes',
     'AppProveedores',
     'AppArticulos',
     'AppAgregar',
     'AppAgregarCli',
+    'AppAgregarProv',
     'AppAgregarF',
     'AppDirecciones',
     'AppPerfiles',
@@ -61,6 +63,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     'widget_tweaks',
+    'sweetify',
 ]
 
 MIDDLEWARE = [
@@ -86,6 +89,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'AppAgregar.context_processor.importe_total',
+                'AppAgregar.context_processor.importe_totalsiniva',
             ],
         },
     },
@@ -154,3 +159,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'Home'
 LOGOUT_REDIRECT_URL = 'login'
 
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'

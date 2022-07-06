@@ -1,4 +1,3 @@
-from turtle import ondrag
 from django.db import models
 from AppArticulos.models import Articulo
 from AppClientes.models import Clientes
@@ -35,12 +34,12 @@ class PuntosDeVenta(models.Model):
         return "Punto de venta nro " + (str(self.numero))
 
 class ComprobanteC (models.Model):
-    id_comprobante = models.IntegerField(primary_key = True)
-    numero = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    numero = models.CharField(max_length=10)
     id_punto_de_venta = models.IntegerField()
-    id_tipo_comprobante = models.ForeignKey(TipoComprobante, on_delete=models.CASCADE)
-    id_proveedor = models.ForeignKey(Proveedores, on_delete=models.CASCADE)
-    fecha = models.DateField()
+    id_tipo_comprobante =  models.IntegerField()
+    id_proveedor = models.IntegerField()
+    monto_total = models.FloatField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
 
@@ -50,6 +49,23 @@ class ComprobanteC (models.Model):
 
     def __str__(self):
         return self.numero
+
+class DetalleC (models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_articulo = models.IntegerField()
+    cantidad = models.IntegerField()
+    monto_unitario = models.FloatField()
+    porcentaje_iva = models.FloatField()
+    bonificacion = models.IntegerField()
+    id_comprobante = models.ForeignKey(ComprobanteC, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'Detalle de '+(str(self.id_comprobante))
+
+    class Meta:
+        verbose_name = "Detalle"
+        verbose_name_plural = "DetalleCompras"
+        ordering = ['id']
 
 class ComprobanteV (models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

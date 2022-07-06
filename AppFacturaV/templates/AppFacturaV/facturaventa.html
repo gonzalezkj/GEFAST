@@ -1,0 +1,371 @@
+{% extends "base/base.html" %}
+{% load static %}   
+{% block content %}  
+
+<style>
+    .botton{
+        padding: 10px;
+    }
+</style>
+<div class="container">
+    <form action="{% url 'procesar_venta' %}" class="formulariofactura" method="GET" onsubmit="return checkforblank()">
+    <div class="recuadro uno">
+        <div class="centrar">
+            <div class="dropdown shop">
+                <nav class="nav nav-masthead justify-content-center float-md-end">
+                    <div class="recuadro fact">
+                        <button type="button" onclick="mostrarFormFact();">
+                            Tipo Comprobante
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    {% if request.session.agregarf.items %}
+                                        {% for key, value in request.session.agregarf.items %}
+                                            <h6 class="textcli" style="color:white"> {{ value.nombre }} {{ value.letra }} </h6> 
+                                        {% endfor %}
+                                    {% endif %}
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div>
+                        <h6 style="color:white">Número de factura:</h6>
+                        <input type="text" class="form-control" style="height: 26px; width: 120px;" id="numerofact" name="numerofact">
+                    </div>
+                </nav>
+            </div> 
+        </div>
+        <div class="centrar">
+            <nav class="nav nav-masthead justify-content-center float-md-end">
+                <p style="color:white">
+                    Punto de venta:
+                    <select name="puntonumero" class="form-select" aria-label="Default select example">
+                    {% for x in puntos %}    
+                        <option>{{ x.numero }}</option>
+                    {% endfor %}
+                    </select>  
+                </p>
+            </nav>
+        </div> 
+    </div>
+
+    <div class="recuadro dos">
+        <button type="button" class="btn btn-warning btn-circle botton" onclick="mostrarFormCli();">
+            CLIENTES  <i class="fa-solid fa-plus cli"></i>
+        </button><br>
+        <button type="button" class="btn btn-warning btn-circle botton" onclick="mostrarFormArt();">
+            ARTICULOS <i class="fa-solid fa-plus"></i>
+        </button><br>
+        <button type="button" class="btn btn-warning btn-circle concept botton">
+            CONCEPTO  <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
+    
+    <div class="recuadro tres">
+        <h5 class="ddc">DATOS DEL CLIENTE:</h5>
+        <div class="datos">
+            <table class="tablaclientes">
+                    <thead>
+                        <tr>
+                            <th class="celdacliente">RAZÓN/NOMBRE:</th>        
+                            <th class="celdacliente2"> 
+                                {% if request.session.agregarcli.items %}
+                                {% for key, value in request.session.agregarcli.items %}
+                                <h6 class="textcli"> {{ value.razon_nombre }} </h6> 
+                                {% endfor %}
+                                {% endif %}
+                            </th>
+                        </tr>
+                        </thead>
+                        <thead>
+                        <tr>
+                            <th class="celdacliente">CUIT:</th>        
+                            <th class="celdacliente2"> 
+                                {% if request.session.agregarcli.items %}
+                                {% for key, value in request.session.agregarcli.items %}
+                                <h6 class="textcli"> {{ value.cuit }} </h6>
+                                {% endfor %}
+                                {% endif %}
+                            </th>
+                        </tr>
+                        </thead>
+                        <thead>
+                        <tr>
+                            <th class="celdacliente">CONDICIÓN:</th>        
+                            <th class="celdacliente2">
+                                {% if request.session.agregarcli.items %}
+                                {% for key, value in request.session.agregarcli.items %}
+                                <h6 class="textcli"> {{ value.condicion }} </h6>
+                                {% endfor %}
+                                {% endif %}
+                            </th>
+                        </tr>
+                    </thead>
+            </table> 
+        </div>
+    </div>
+
+    <div class="recuadro tabla">
+        <table class="table">
+            <thead class="headtable">
+                <th>Código</th>        
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>U. Medida</th>
+                <th>Precio U.</th>
+                <th>Bonificación</th>
+                <th>Importe</th>
+                <th>% IVA</th>
+                <th>SUBTOTAL</th>
+            </thead>
+            <tbody>
+                {% if request.session.agregar.items %}
+                {% for key, value in request.session.agregar.items %}
+                <tr>
+                    <td>{{value.articulo_id}}</td>
+                    <td>{{value.nombre}}</td>
+                    <td>
+                        <a href="{% url 'agregar:decrement' value.articulo_id %}" class="btn btn-sm btn success" style="color:white">-</a>
+                        {{value.cantidad}}
+                        {% if value.cantidad != value.totalcant %}
+                            <a href="{% url 'agregar:add' value.articulo_id %}" class="btn btn-sm btn success" style="color:white">+</a>
+                        {% endif %}
+                    </td>
+                    <td>Vacio</td>
+                    <td>{{value.precio}}</td>
+                    <td><input type="number" min="0" max="30" class="form-control" style="height: 26px; width: 120px;" placeholder="Ej: 10" name="bonif" value="0"></td>
+                    <td>{{value.subtotal}}</td>
+                    {% if request.session.agregarf.items %}
+                        {% for key, value in request.session.agregarf.items %}
+                            {% if value.factura_id == 1 or value.factura_id == 2 or value.factura_id == 3 %}
+                                <td> 21 </td>
+                            {% else %} 
+                                <td> Exento </td>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <td style="text-align: center;"> - </td>
+                    {% endif %}
+                    <td>{{value.totalcant}}</td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="12">
+                        <div class="alert alert-danger text-center">
+                            No hay articulos
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+            <tfoot>
+                <tr>        
+                    <td colspan="12">
+                        {% if request.session.agregar.items %}
+                            <button style="float: left" type="submit" class="btn btn-success"><a href="{% url 'agregar:clear' %}" style="color: white; text-decoration: none;" > Vaciar factura </a></button>
+                        {% endif %}
+                        {% if request.session.agregar.items and request.session.agregarcli.items %}
+                                <button style="float: left" type="submit" class="btn btn-success"> Crear orden </button>
+                        {% endif %}
+                        <h6 style="float: right; margin-right: 100px;">Monto total: {{ importe_total }}</h6>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+    </div>
+</div>
+
+<div id="formart" class="recuadro articulos">
+        <div class="row" style="--bs-gutter-x: 0;">
+            <div style="background-color: black">
+                <button type="submit" class="boton btn-danger" style="height: 45px; float: right;" onclick="cerrarArt();">Cerrar</button>
+            </div>
+        </div>
+
+        <div class="listados">
+        <table class="listadostabla col-md-12 search">
+            <thead>
+                <th>Código</th>        
+                <th>Producto</th>
+                <th>Precio</th>
+            </thead>
+            <tbody>
+                {% if articulos %} 
+                    {% for art in articulos %}
+                            <tr>
+                                <td>{{ art.id_articulo }}</td>
+                                <td>{{ art.nombre }}</td>
+                                <td>{{ art.precio }}</td>
+                                <td><a href="{% url 'agregar:add' art.id_articulo %}" class="btn btn-success"> + </a></td>
+                            </tr>
+                    {% endfor %}
+                {% endif %}    
+            </tbody>
+        </table>
+
+        <div class="paginador">
+            {% if articulos.has_previous and articulos.has_next %} 
+                <span class="page-item"><a class="page-link" href="?page={{ articulos.previous_page_number }}">Anterior</a> </span>
+                <span class="page-item disabled"><a href="#" class="page-link"> {{ articulos.number }} de {{ articulos.paginator.num_pages }}</a> </span>
+                <span class="page-item" ><a class="page-link" href="?page={{ articulos.next_page_number }}">Siguiente </a> </span>
+                {% else %}
+                    {% if articulos.has_previous %} 
+                        <span class="page-item"><a class="page-link" href="?page={{ articulos.previous_page_number }}">Anterior</a> </span>
+                        <span class="page-item disabled"><a href="#" class="page-link"> {{ articulos.number }} de {{ articulos.paginator.num_pages }}</a> </span>
+                        <span class="page-item"><a class="page-link" >Siguiente </a> </span>
+                    {% endif %}
+                    
+                    {% if articulos.has_next %}
+                        <span class="page-item"><a class="page-link" >Anterior</a> </span>
+                        <span class="page-item disabled"><a href="#" class="page-link"> {{ articulos.number }} de {{ articulos.paginator.num_pages }}</a> </span>
+                        <span class="page-item"><a class="page-link" href="?page={{ articulos.next_page_number }}">Siguiente </a> </span>
+                    {% endif %}
+            {% endif %}      
+        </div>
+        
+        </div>
+        <div class="row busqueda">
+            <div class="col-md-12 search">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control buscar" placeholder="Buscar..." 
+                            name="buscarart" value="{{ request.GET.buscar }}">
+                            <span class="input-group-list">
+                                <i class="icon icon-search"></i>
+                                <button type="submit" class="boton btn-success" style="height: 45px;">Buscar</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+
+<div id="formcli" class="recuadro clientes">
+        <div class="row" style="--bs-gutter-x: 0;">
+            <div style="background-color: black">
+                <button type="submit" class="boton btn-danger" style="height: 45px; float: right;" onclick="cerrarCli();">Cerrar</button>
+            </div>
+        </div>    
+        <div class="listados">
+            <table class="listadostabla col-md-12 search" id="ClienteTabla">
+                <thead>
+                    <th>Razón/Nombre</th>        
+                    <th>CUIT</th>
+                    <th>Condición</th>
+                </thead>
+                <tbody>
+                    {% if cli %} 
+                        {% for clientes in cli %}
+                            <tr>
+                                <td>{{ clientes.razon_nombre }}</td>
+                                <td>{{ clientes.cuit }}</td>
+                                <td>{{ clientes.condicion }}</td>
+                                <td><a href="{% url 'agregarcli:addcli' clientes.id_cliente %}" class="btn btn-success cli"> + </a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </form>
+                </tbody>
+            </table> 
+        </div>
+        <div class="row busqueda">
+            <div class="col-md-12 search">
+                <form method="get">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control" placeholder="Buscar..." 
+                            name="buscarcli" value="{{ request.GET.buscar }}">
+                            <span class="input-group-list">
+                                <i class="icon icon-search"></i>
+                                <button type="submit" class="boton btn-success" style="height: 45px;">Buscar</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div> 
+        </div>
+</div>
+
+
+<div id="formfact" class="recuadro facturas">
+    <div class="row" style="--bs-gutter-x: 0;">
+        <div style="background-color: black">
+            <button type="submit" class="boton btn-danger" style="height: 45px; float: right;" onclick="cerrarFact();">Cerrar</button>
+        </div>
+    </div>    
+    <div class="listados">
+        <table class="listadostabla col-md-12 search">
+            <thead>
+                <th style="color:white">Tipo comprobante</th>        
+            </thead>
+            <tbody>
+                {% if fact %} 
+                    {% for facturas in fact %}
+                        <tr>
+                            <td style="color:white">{{ facturas.nombre }} {{ facturas.letra }} </td>
+                            <td><a href="{% url 'agregarf:addf' facturas.id_tipo_comprobante %}" class="btn btn-success cli"> + </a></td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table> 
+    </div>
+</div>
+
+
+<script>
+
+    function mostrarFormArt(){
+        if ((document.getElementById('formcli').style="display:none") && (document.getElementById('formfact').style="display:none")  || (document.getElementById('formfact').style="display:none" || (document.getElementById('formcli').style="display:none"))){
+            document.getElementById('formart').style.display = 'block'
+        } else {
+            document.getElementById('formart').style.display = 'none'
+        }
+    }
+
+    function mostrarFormCli(){
+        if ((document.getElementById('formfact').style="display:none") && (document.getElementById('formart').style="display:none") || (document.getElementById('formart').style="display:none") || (document.getElementById('formfact').style="display:none")){
+            document.getElementById('formcli').style.display = 'block'
+        } else {
+            document.getElementById('formcli').style.display = 'none'
+        }
+    }
+
+    function mostrarFormFact(){
+        if ((document.getElementById('formcli').style="display:none") && (document.getElementById('formart').style="display:none") || (document.getElementById('formart').style="display:none") || (document.getElementById('formcli').style="display:none")){
+            document.getElementById('formfact').style.display = 'block'
+        } else {
+            document.getElementById('formfact').style.display = 'none'
+        }
+    }
+
+    function cerrarArt(){
+        document.getElementById('formart').style.display = 'none'
+    }
+
+    function cerrarCli(){
+        document.getElementById('formcli').style.display = 'none'
+    }
+
+    function cerrarFact(){
+        document.getElementById('formfact').style.display = 'none'
+    }
+
+    function checkforblank() {
+        if (document.getElementById('numerofact').value == ""){
+            Swal.fire("Completar campo 'Número de factura' ")
+            document.getElementById('numerofact').style.borderColor = "red";
+            return false;
+        }
+    }
+
+</script>
+
+{% endblock %}

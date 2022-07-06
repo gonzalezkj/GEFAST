@@ -24,6 +24,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', include('AppPerfiles.urls')),
     path('factura/', include('AppFactura.urls')),
+    path('facturaventa/', include('AppFacturaV.urls')),
     path('nota/', include('AppNota.urls')),
     path('stock/', include('AppStock.urls')),
     path('reportes/', include('AppReportes.urls')),
@@ -31,6 +32,7 @@ urlpatterns = [
     path('articulos/', include('AppArticulos.urls')),
     path('agregar/', include('AppAgregar.urls')),
     path('agregarcli/', include('AppAgregarCli.urls')),
+    path('agregarprov/', include('AppAgregarProv.urls')),
     path('agregarf/', include('AppAgregarF.urls')),
     path('abm/', include('AppABM.urls')),
     
