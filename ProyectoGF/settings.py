@@ -49,16 +49,21 @@ INSTALLED_APPS = [
     'AppNota',
     'AppClientes',
     'AppProveedores',
+    'AppAgregarFV',
+    'AppAgregarV',
     'AppArticulos',
     'AppAgregar',
     'AppAgregarCli',
-    'AppAgregarProv',
     'AppAgregarF',
     'AppDirecciones',
     'AppPerfiles',
     'AppABM',
     'AppOrdenes',
     
+    #Aplicaciones de proveedores
+    'AppAgregarProv',
+
+
     #Django external apps
     'bootstrap4',
     'crispy_forms',

@@ -3,6 +3,7 @@ from AppAgregarF.agregarf import AgregarF
 from AppArticulos.models import Articulo
 from AppClientes.models import Clientes
 from AppAgregarCli.agregarcli import Agregarcli
+from AppAgregarV
 from AppFactura.models import ComprobanteC, DetalleC, PuntosDeVenta, TipoComprobante
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -18,7 +19,7 @@ def facturaventa(request):
     cliente = Clientes.objects.all()
     facturas = TipoComprobante.objects.all()
     puntosdeventa = PuntosDeVenta.objects.all()
-    p = Paginator(Articulo.objects.all(),4)
+    p = Paginator(Articulo.objects.all(), 4)
     page = request.GET.get('page')
     articulos = p.get_page(page)
 
@@ -35,11 +36,11 @@ def facturaventa(request):
 
 @login_required
 def procesar_venta(request):
-    agregar = Agregar(request)
+    agregarv = AgregarV(request)
     agregarcli = Agregarcli(request)
-    agregarf = AgregarF(request)
+    agregarfv = AgregarFV(request)
     numerofact = request.GET.get("numerofact")
-    for key, value in agregarf.agregarf.items():
+    for key, value in agregarfv.agregarfv.items():
         f = value["factura_id"]
     if f == 1 or f == 2 or f == 3:
         ivapor = 21
@@ -47,7 +48,7 @@ def procesar_venta(request):
         ivapor = 0
     for key, value in agregarcli.agregarcli.items():
         cli = value["cliente_id"]
-    for key, value in agregar.agregar.items():
+    for key, value in agregarv.agregarv.items():
         if f == 1 or f == 2 or f == 3:
             comprobante = ComprobanteV.objects.create(
                 user=request.user, 
@@ -68,7 +69,7 @@ def procesar_venta(request):
                 monto_total=value["subtotal"],
             )
     venta_lista = list() 
-    for key, value in agregar.agregar.items():
+    for key, value in agregarv.agregarv.items():
         b = request.GET.get("bonif")
         if b == '':
             b = int(1)
@@ -86,7 +87,7 @@ def procesar_venta(request):
     
     DetalleV.objects.bulk_create(venta_lista)
 
-    agregar.clear()
+    agregarv.clear()
     agregarcli.clearcli()
 
     messages.success(request, "La orden se creo correctamente.")

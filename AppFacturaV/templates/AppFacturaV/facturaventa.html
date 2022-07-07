@@ -22,9 +22,15 @@
                         <thead>
                             <tr>
                                 <th>
-                                    {% if request.session.agregarf.items %}
-                                        {% for key, value in request.session.agregarf.items %}
+                                    {% if request.session.agregarfv.items %}
+                                        {% for key, value in request.session.agregarfv.items %}
                                             <h6 class="textcli" style="color:white"> {{ value.nombre }} {{ value.letra }} </h6> 
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for x in fact %}
+                                            {% if x.id_tipo_comprobante == 1 %}
+                                            <h6 class="textcli" style="color:white"> {{ x.nombre }} {{ x.letra }}  </h6> 
+                                            {% endif %}
                                         {% endfor %}
                                     {% endif %}
                                 </th>
@@ -122,34 +128,36 @@
                 <th>SUBTOTAL</th>
             </thead>
             <tbody>
-                {% if request.session.agregar.items %}
-                {% for key, value in request.session.agregar.items %}
+                {% if request.session.agregarv.items %}
+                {% for key, value in request.session.agregarv.items %}
                 <tr>
                     <td>{{value.articulo_id}}</td>
                     <td>{{value.nombre}}</td>
                     <td>
-                        <a href="{% url 'agregar:decrement' value.articulo_id %}" class="btn btn-sm btn success" style="color:white">-</a>
+                        <a href="{% url 'agregarv:decrement' value.articulo_id %}" class="btn btn-sm btn success" style="color:white">-</a>
                         {{value.cantidad}}
                         {% if value.cantidad != value.totalcant %}
-                            <a href="{% url 'agregar:add' value.articulo_id %}" class="btn btn-sm btn success" style="color:white">+</a>
+                            <a href="{% url 'agregarv:add' value.articulo_id %}" class="btn btn-sm btn success" style="color:white">+</a>
                         {% endif %}
                     </td>
                     <td>Vacio</td>
                     <td>{{value.precio}}</td>
                     <td><input type="number" min="0" max="30" class="form-control" style="height: 26px; width: 120px;" placeholder="Ej: 10" name="bonif" value="0"></td>
                     <td>{{value.subtotal}}</td>
-                    {% if request.session.agregarf.items %}
-                        {% for key, value in request.session.agregarf.items %}
-                            {% if value.factura_id == 1 or value.factura_id == 2 or value.factura_id == 3 %}
+                    {% if request.session.agregarfv.items %}
+                        {% for key, valuee in request.session.agregarfv.items %}
+                            {% if valuee.factura_id == 1 or valuee.factura_id == 2 or valuee.factura_id == 3 %}
                                 <td> 21 </td>
+                                <td>{{value.totalcant}}</td>
                             {% else %} 
                                 <td> Exento </td>
+                                <td>{{value.subtotal}}</td>
                             {% endif %}
                         {% endfor %}
                     {% else %}
-                        <td style="text-align: center;"> - </td>
+                        <td style="text-align: center;"> 21 </td>
+                        <td>{{value.totalcant}}</td>
                     {% endif %}
-                    <td>{{value.totalcant}}</td>
                 </tr>
                 {% endfor %}
                 {% else %}
@@ -165,13 +173,21 @@
             <tfoot>
                 <tr>        
                     <td colspan="12">
-                        {% if request.session.agregar.items %}
-                            <button style="float: left" type="submit" class="btn btn-success"><a href="{% url 'agregar:clear' %}" style="color: white; text-decoration: none;" > Vaciar factura </a></button>
+                        {% if request.session.agregarv.items %}
+                            <button style="float: left" type="submit" class="btn btn-success"><a href="{% url 'agregarv:clear' %}" style="color: white; text-decoration: none;" > Vaciar factura </a></button>
                         {% endif %}
                         {% if request.session.agregar.items and request.session.agregarcli.items %}
                                 <button style="float: left" type="submit" class="btn btn-success"> Crear orden </button>
                         {% endif %}
-                        <h6 style="float: right; margin-right: 100px;">Monto total: {{ importe_total }}</h6>
+                        {% if request.session.agregarfv.items %}
+                            {% for key, valuee in request.session.agregarfv.items %}
+                                {% if valuee.factura_id == 1 or valuee.factura_id == 2 or valuee.factura_id == 3 %}
+                                    <h6 style="float: right; margin-right: 100px;">Monto total: {{ totalventaIVA }}</h6>
+                                {% else %}
+                                    <h6 style="float: right; margin-right: 100px;">Monto total: {{ totalventa }}</h6>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     </td>
                 </tr>
             </tfoot>
@@ -201,7 +217,7 @@
                                 <td>{{ art.id_articulo }}</td>
                                 <td>{{ art.nombre }}</td>
                                 <td>{{ art.precio }}</td>
-                                <td><a href="{% url 'agregar:add' art.id_articulo %}" class="btn btn-success"> + </a></td>
+                                <td><a href="{% url 'agregarv:add' art.id_articulo %}" class="btn btn-success"> + </a></td>
                             </tr>
                     {% endfor %}
                 {% endif %}    
@@ -310,7 +326,7 @@
                     {% for facturas in fact %}
                         <tr>
                             <td style="color:white">{{ facturas.nombre }} {{ facturas.letra }} </td>
-                            <td><a href="{% url 'agregarf:addf' facturas.id_tipo_comprobante %}" class="btn btn-success cli"> + </a></td>
+                            <td><a href="{% url 'agregarfv:addfv' facturas.id_tipo_comprobante %}" class="btn btn-success cli"> + </a></td>
                         </tr>
                     {% endfor %}
                 {% endif %}
