@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from .agregarf import AgregarF
+from .agregarfv import AgregarFV
 from AppFactura.models import TipoComprobante
 # Create your views here.
 

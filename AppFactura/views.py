@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from AppAgregarF.agregarf import AgregarF
 from AppArticulos.models import Articulo
-from AppClientes.models import Clientes
 from AppProveedores.models import Proveedores
 from AppAgregarProv.agregarprov import Agregarprov
 from AppFactura.models import ComprobanteC, DetalleC, PuntosDeVenta, TipoComprobante
@@ -40,6 +39,7 @@ def procesar_compra(request):
     agregarprov = Agregarprov(request)
     agregarf = AgregarF(request)
     numerofact = request.GET.get("numerofact")
+    montonaso = 0
     for key, value in agregarf.agregarf.items():
         f = value["factura_id"]
     if f == 1 or f == 2 or f == 3:
@@ -47,27 +47,28 @@ def procesar_compra(request):
     else:
         ivapor = 0
     for key, value in agregarprov.agregarprov.items():
-        cli = value["cliente_id"]
+        prov = value["proveedor_id"]
     for key, value in agregar.agregar.items():
-        if f == 1 or f == 2 or f == 3:
-            comprobante = ComprobanteC.objects.create(
-                user=request.user, 
-                numero=numerofact,
-                id_punto_de_venta=request.GET.get("puntonumero"),
-                id_tipo_comprobante=f,
-                id_proveedor=cli,
-                monto_total=(value["subtotal"]*21)/100+(value["subtotal"]),
-            )
-            break
-        else:
-            comprobante = ComprobanteC.objects.create(
-                user=request.user, 
-                numero=numerofact,
-                id_punto_de_venta=request.GET.get("puntonumero"),
-                id_tipo_comprobante=f,
-                id_proveedor=cli,
-                monto_total=value["subtotal"],
-            )
+        montonaso = montonaso + value['totalcant']
+    if f == 1 or f == 2 or f == 3:
+        comprobante = ComprobanteC.objects.create(
+            user=request.user, 
+            numero=numerofact,
+            id_punto_de_venta=request.GET.get("puntonumero"),
+            id_tipo_comprobante=f,
+            id_proveedor=prov,
+            monto_total=montonaso,
+        )
+    else:
+        comprobante = ComprobanteC.objects.create(
+            user=request.user, 
+            numero=numerofact,
+            id_punto_de_venta=request.GET.get("puntonumero"),
+            id_tipo_comprobante=f,
+            id_proveedor=prov,
+            monto_total=value["subtotal"],
+        )
+
     venta_lista = list() 
     for key, value in agregar.agregar.items():
         b = request.GET.get("bonif")

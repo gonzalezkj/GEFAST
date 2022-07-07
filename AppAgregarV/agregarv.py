@@ -34,7 +34,7 @@ class AgregarV:
 
     def remove(self, articulo):
         articulo_id = str(articulo.id_articulo)
-        if articulo_id in self.agregavr:
+        if articulo_id in self.agregarv:
             del self.agregarv[articulo_id]
             self.save()
         

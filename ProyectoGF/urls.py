@@ -31,9 +31,11 @@ urlpatterns = [
     path('clientes/', include('AppClientes.urls')),
     path('articulos/', include('AppArticulos.urls')),
     path('agregar/', include('AppAgregar.urls')),
+    path('agregarv/', include('AppAgregarV.urls')),
     path('agregarcli/', include('AppAgregarCli.urls')),
     path('agregarprov/', include('AppAgregarProv.urls')),
     path('agregarf/', include('AppAgregarF.urls')),
+    path('agregarfv/', include('AppAgregarFV.urls')),
     path('abm/', include('AppABM.urls')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -7,208 +7,197 @@
         padding: 10px;
     }
 </style>
-<div class="container">
-    <form action="{% url 'procesar_compra' %}" class="formulariofactura" method="GET" onsubmit="return checkforblank()">
-    <div class="recuadro uno">
-        <div class="centrar">
-            <div class="dropdown shop">
-                <nav class="nav nav-masthead justify-content-center float-md-end">
-                    <div class="recuadro fact">
-                        <button type="button" onclick="mostrarFormFact();">
+    <div class="container">
+        <form action="{% url 'procesar_compra' %}" class="formulariofactura" method="GET" onsubmit="return checkforblank()">
+            <div class="recuadro uno">
+                <div class="dropdown shop">
+                    <div class="tip-compr">
+                        <button type="button" class="btn_facturas" onclick="mostrarFormFact();">
                             Tipo Comprobante
                         </button>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>
-                                    {% if request.session.agregarf.items %}
-                                        {% for key, value in request.session.agregarf.items %}
-                                            <h6 class="textcli" style="color:white"> {{ value.nombre }} {{ value.letra }} </h6> 
-                                        {% endfor %}
-                                    {% else %}
-                                        {% for x in fact %}
-                                            {% if x.id_tipo_comprobante == 1 %}
-                                            <h6 class="textcli" style="color:white"> {{ x.nombre }} {{ x.letra }}  </h6> 
-                                            {% endif %}
-                                        {% endfor %}
+                            {% if request.session.agregarf.items %}
+                                {% for key, value in request.session.agregarf.items %}
+                                    <label style="color:black; font-weight: bold;">  {{ value.nombre }} {{ value.letra }} </label> 
+                                {% endfor %}
+                            {% else %}
+                                {% for x in fact %}
+                                    {% if x.id_tipo_comprobante == 1 %}
+                                        <h6 class="textcli" style="color:black; font-weight: bold;"> {{ x.nombre }} {{ x.letra }}  </h6> 
                                     {% endif %}
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div>
-                        <h6 style="color:white">Número de factura:</h6>
-                        <input type="text" class="form-control" style="height: 26px; width: 120px;" id="numerofact" name="numerofact">
-                    </div>
-                </nav>
-            </div> 
-        </div>
-        <div class="centrar">
-            <nav class="nav nav-masthead justify-content-center float-md-end">
-                <p style="color:white">
-                    Punto de venta:
-                    <select name="puntonumero" class="form-select" aria-label="Default select example">
-                    {% for x in puntos %}    
-                        <option>{{ x.numero }}</option>
-                    {% endfor %}
-                    </select>  
-                </p>
-            </nav>
-        </div> 
-    </div>
-
-    <div class="recuadro dos">
-        <button type="button" class="btn btn-warning btn-circle botton" onclick="mostrarFormCli();">
-            PROVEEDORES  <i class="fa-solid fa-plus cli"></i>
-        </button><br>
-        <button type="button" class="btn btn-warning btn-circle botton" onclick="mostrarFormArt();">
-            ARTICULOS <i class="fa-solid fa-plus"></i>
-        </button><br>
-        <button type="button" class="btn btn-warning btn-circle concept botton">
-            CONCEPTO  <i class="fa-solid fa-plus"></i>
-        </button>
-    </div>
-    
-    <div class="recuadro tres">
-        <h5 class="ddc">DATOS DEL PROVEEDOR:</h5>
-        <div class="datos">
-            <table class="tablaclientes">
-                    <thead>
-                        <tr>
-                            <th class="celdacliente">RAZÓN SOCIAL:</th>        
-                            <th class="celdacliente2"> 
-                                {% if request.session.agregarprov.items %}
-                                {% for key, value in request.session.agregarprov.items %}
-                                <h6 class="textcli"> {{ value.razon_social }} </h6> 
                                 {% endfor %}
-                                {% endif %}
-                            </th>
-                        </tr>
-                        </thead>
-                        <thead>
-                        <tr>
-                            <th class="celdacliente">CUIT:</th>        
-                            <th class="celdacliente2"> 
-                                {% if request.session.agregarprov.items %}
-                                {% for key, value in request.session.agregarprov.items %}
-                                <h6 class="textcli"> {{ value.cuit }} </h6>
-                                {% endfor %}
-                                {% endif %}
-                            </th>
-                        </tr>
-                        </thead>
-                        <thead>
-                        <tr>
-                            <th class="celdacliente">CONDICIÓN:</th>        
-                            <th class="celdacliente2">
-                                {% if request.session.agregarprov.items %}
-                                {% for key, value in request.session.agregarprov.items %}
-                                <h6 class="textcli"> {{ value.condicion }} </h6>
-                                {% endfor %}
-                                {% endif %}
-                            </th>
-                        </tr>
-                    </thead>
-            </table> 
-        </div>
-    </div>
-
-    <div class="recuadro tabla">
-        <table class="table">
-            <thead class="headtable">
-                <th>Código</th>        
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>U. Medida</th>
-                <th>Precio U.</th>
-                <th>Bonificación</th>
-                <th>Importe</th>
-                <th>% IVA</th>
-                <th>SUBTOTAL</th>
-            </thead>
-            <tbody>
-                {% if request.session.agregar.items %}
-                {% for key, value in request.session.agregar.items %}
-                <tr>
-                    <td>{{value.articulo_id}}</td>
-                    <td>{{value.nombre}}</td>
-                    <td>
-                        <a href="{% url 'agregar:decrement' value.articulo_id %}" class="btn btn-sm btn success" style="color:white">-</a>
-                        {{value.cantidad}}
-                        {% if value.cantidad != value.totalcant %}
-                            <a href="{% url 'agregar:add' value.articulo_id %}" class="btn btn-sm btn success" style="color:white">+</a>
-                        {% endif %}
-                    </td>
-                    <td>Vacio</td>
-                    <td>{{value.precio}}</td>
-                    <td><input type="number" min="0" max="30" class="form-control" style="height: 26px; width: 120px;" placeholder="Ej: 10" name="bonif" value="0"></td>
-                    <td>{{value.subtotal}}</td>
-                    {% if request.session.agregarf.items %}
-                        {% for key, valuee in request.session.agregarf.items %}
-                            {% if valuee.factura_id == 1 or valuee.factura_id == 2 or valuee.factura_id == 3 %}
-                                <td> 21 </td>
-                                <td>{{value.totalcant}}</td>
-                            {% else %} 
-                                <td> Exento </td>
-                                <td>{{value.subtotal}}</td>
                             {% endif %}
+                    </div>
+                <div class="num-punt">
+                    <div  class="num-punt-label">
+                        <label style="font-weight: bold">Número de factura:</label>
+                        <label style="font-weight: bold">Punto de venta:</label>
+                    </div>
+                    <div class="num-punt-input">
+                        <input type="text" class="" style=" width: 120px;" id="numerofact" name="numerofact">
+                        <select name="puntonumero" style="width: 120px" aria-label="Default select example">
+                        {% for x in puntos %}
+                            <option>{{ x.numero }}</option>
                         {% endfor %}
-                    {% else %}
-                        <td style="text-align: center;"> 21 </td>
-                        <td>{{value.totalcant}}</td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-                {% else %}
-                <tr>
-                    <td colspan="12">
-                        <div class="alert alert-danger text-center">
-                            No hay articulos
-                        </div>
-                    </td>
-                </tr>
-                {% endif %}
-            </tbody>
-            <tfoot>
-                <tr>        
-                    <td colspan="12">
-                        {% if request.session.agregar.items %}
-                            <button style="float: left" type="submit" class="btn btn-success"><a href="{% url 'agregar:clear' %}" style="color: white; text-decoration: none;" > Vaciar factura </a></button>
+                        </select>
+                    </div>
+                </div>
+            </div>  
+        </div>
+
+        <div class="recuadro dos">
+            <button type="button" class="btn_facturas" onclick="mostrarFormCli();">
+                PROVEEDORES  <i style="margin-left: 13px;" class="fa-solid fa-plus cli"></i>
+            </button><br>
+            <button type="button" class="btn_facturas" onclick="mostrarFormArt();">
+                ARTICULOS <i style="margin-left: 35px;" class="fa-solid fa-plus"></i>
+            </button><br>
+            <button type="button" class="btn_facturas">
+                CONCEPTO  <i style="margin-left: 35px;" class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+
+        <div class="recuadro tres">
+            <label style="font-weight: bold">DATOS DEL PROVEEDOR:</label>
+            <div class="recuadrocolumna">
+                <div class="columna">
+                    <label style="font-weight: bold"  class="celdacliente">RAZÓN SOCIAL:</label>  
+                    <label style="font-weight: bold"  class="celdacliente">CONDICIÓN:</label>
+                    <label style="font-weight: bold"  class="celdacliente">CUIT:</label>       
+                </div>
+                <div class="columna">
+                    <label class=""> 
+                        {% if not request.session.agregarprov.items %}
+                            <input class="recuadrotresinput" disabled>
+                        {% else %}
+                            {%if request.session.agregarprov.items %}
+                                {% for key, value in request.session.agregarprov.items %}
+                                    <input value="{{ value.razon_social }}" class="recuadrotresinput" disabled>
+                                {% endfor %}
+                            {% endif %}
                         {% endif %}
-                        {% if request.session.agregar.items and request.session.agregarprov.items %}
-                                <button style="float: left" type="submit" class="btn btn-success"> Crear orden </button>
+                    </label>
+                    <label class=""> 
+                        {% if not request.session.agregarprov.items %}
+                            <input class="recuadrotresinput" disabled>
+                        {% else %}
+                            {% if request.session.agregarprov.items %}
+                                {% for key, value in request.session.agregarprov.items %}
+                                    <input value="{{ value.cuit }}" class="recuadrotresinput" disabled> 
+                                {% endfor %}
+                            {% endif %}
                         {% endif %}
+                    </label>        
+                    <label class="">
+                        {% if not request.session.agregarprov.items %}
+                        <input class="recuadrotresinput" disabled>
+                        {% else %}
+                            {% if request.session.agregarprov.items %}
+                                {% for key, value in request.session.agregarprov.items %}
+                                <input value="{{ value.condicion }}" class="recuadrotresinput" disabled>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                    </label>
+                </div> 
+            </div>              
+        </div>
+
+        <div class="tabla">
+            <table class="table">
+                <thead class="headtable">
+                    <th>Código</th>        
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>U. Medida</th>
+                    <th>Precio U.</th>
+                    <th>Bonificación</th>
+                    <th>Importe</th>
+                    <th>% IVA</th>
+                    <th>SUBTOTAL</th>
+                </thead>
+                <tbody>
+                    {% if request.session.agregar.items %}
+                    {% for key, value in request.session.agregar.items %}
+                    <tr>
+                        <td>{{value.articulo_id}}</td>
+                        <td>{{value.nombre}}</td>
+                        <td>
+                            <a href="{% url 'agregar:decrement' value.articulo_id %}" class="btn btn-sm btn success" style="color:black">-</a>
+                            {{value.cantidad}}
+                            {% if value.cantidad != value.totalcant %}
+                                <a href="{% url 'agregar:add' value.articulo_id %}" class="btn btn-sm btn success" style="color:black">+</a>
+                            {% endif %}
+                        </td>
+                        <td>Vacio</td>
+                        <td>{{value.precio}}</td>
+                        <td><input type="number" min="0" max="30" class="form-control" style="height: 26px; width: 120px;" placeholder="Ej: 10" name="bonif" value="0"></td>
+                        <td>{{value.subtotal}}</td>
                         {% if request.session.agregarf.items %}
                             {% for key, valuee in request.session.agregarf.items %}
                                 {% if valuee.factura_id == 1 or valuee.factura_id == 2 or valuee.factura_id == 3 %}
-                                    <h6 style="float: right; margin-right: 100px;">Monto total: {{ importe_total }}</h6>
-                                {% else %}
-                                    <h6 style="float: right; margin-right: 100px;">Monto total: {{ totalsiniva }}</h6>
+                                    <td> 21 </td>
+                                    <td>{{value.totalcant}}</td>
+                                {% else %} 
+                                    <td> Exento </td>
+                                    <td>{{value.subtotal}}</td>
                                 {% endif %}
                             {% endfor %}
+                        {% else %}
+                            <td style="text-align: center;"> 21 </td>
+                            <td>{{value.totalcant}}</td>
                         {% endif %}
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="12">
+                            <div class="text-center">
+                                No hay articulos
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+                <tfoot>
+                    <tr>        
+                        <td colspan="12">
+                            {% if request.session.agregar.items %}
+                                <button style="float: left; width: 150px" type="submit" class="btn_facturas"><a href="{% url 'agregar:clear' %}" style="text-decoration: none; color: white;"> Vaciar factura </a></button>
+                            {% endif %}
+                            {% if request.session.agregar.items and request.session.agregarprov.items %}
+                                    <button style="float: left; width: 150px; margin-left: 5px" type="submit" class="btn_facturas"> Crear orden </button>
+                            {% endif %}
+                            {% if request.session.agregarf.items %}
+                                {% for key, valuee in request.session.agregarf.items %}
+                                    {% if valuee.factura_id == 1 or valuee.factura_id == 2 or valuee.factura_id == 3 %}
+                                        <h6 style="float: right; margin-right: 100px;">Monto total: {{ importe_total }}</h6>
+                                    {% else %}
+                                        <h6 style="float: right; margin-right: 100px;">Monto total: {{ totalsiniva }}</h6>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %} 
+                                <h6 style="float: right; margin-right: 100px;">Monto total: {{ importe_total }}</h6>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            </div>
         </form>
     </div>
-</div>
 
-<div id="formart" class="recuadro articulos">
-        <div class="row" style="--bs-gutter-x: 0;">
-            <div style="background-color: black">
-                <button type="submit" class="boton btn-danger" style="height: 45px; float: right;" onclick="cerrarArt();">Cerrar</button>
-            </div>
+    <div id="formart" class="recuadro articulos">
+        <div style="background-color: #012E40; color: white" class="recuadroarticulos">
+            <h6 style="margin-left: auto; margin-right: auto;">Artículos</h6>
+            <button type="submit" class="boton btn-danger" style="width: 50px; height: 45px; float: right;" onclick="cerrarArt();">X</button>
         </div>
-
+    
         <div class="listados">
         <table class="listadostabla col-md-12 search">
             <thead>
-                <th>Código</th>        
-                <th>Producto</th>
-                <th>Precio</th>
+                <th style="color: black">Código</th>        
+                <th style="color: black">Producto</th>
+                <th style="color: black">Precio</th>
             </thead>
             <tbody>
                 {% if articulos %} 
@@ -223,7 +212,7 @@
                 {% endif %}    
             </tbody>
         </table>
-
+    
         <div class="paginador">
             {% if articulos.has_previous and articulos.has_next %} 
                 <span class="page-item"><a class="page-link" href="?page={{ articulos.previous_page_number }}">Anterior</a> </span>
@@ -261,20 +250,21 @@
                 </form>
             </div>
         </div>
-</div>
-
-<div id="formcli" class="recuadro clientes">
+    </div>
+    
+    <div id="formcli" class="recuadro clientes">
         <div class="row" style="--bs-gutter-x: 0;">
-            <div style="background-color: black">
+            <div style="background-color: #012E40; color: white" class="recuadroarticulos">
+                <h6 style="margin-left: auto; margin-right: auto;">Clientes</h6>
                 <button type="submit" class="boton btn-danger" style="height: 45px; float: right;" onclick="cerrarCli();">Cerrar</button>
             </div>
         </div>    
         <div class="listados">
             <table class="listadostabla col-md-12 search" id="ClienteTabla">
                 <thead>
-                    <th>Razón/Nombre</th>        
-                    <th>CUIT</th>
-                    <th>Condición</th>
+                    <th style="color: black">Razón/Nombre</th>        
+                    <th style="color: black">CUIT</th>
+                    <th style="color: black">Condición</th>
                 </thead>
                 <tbody>
                     {% if prov %} 
@@ -297,7 +287,7 @@
                     <div id="custom-search-input">
                         <div class="input-group col-md-12">
                             <input type="text" class="form-control" placeholder="Buscar..." 
-                            name="buscarprov" value="{{ request.GET.buscar }}">
+                            name="buscarcli" value="{{ request.GET.buscar }}">
                             <span class="input-group-list">
                                 <i class="icon icon-search"></i>
                                 <button type="submit" class="boton btn-success" style="height: 45px;">Buscar</button>
@@ -307,33 +297,34 @@
                 </form>
             </div> 
         </div>
-</div>
-
-
-<div id="formfact" class="recuadro facturas">
-    <div class="row" style="--bs-gutter-x: 0;">
-        <div style="background-color: black">
-            <button type="submit" class="boton btn-danger" style="height: 45px; float: right;" onclick="cerrarFact();">Cerrar</button>
-        </div>
-    </div>    
-    <div class="listados">
-        <table class="listadostabla col-md-12 search">
-            <thead>
-                <th style="color:white">Tipo comprobante</th>        
-            </thead>
-            <tbody>
-                {% if fact %} 
-                    {% for facturas in fact %}
-                        <tr>
-                            <td style="color:white">{{ facturas.nombre }} {{ facturas.letra }} </td>
-                            <td><a href="{% url 'agregarf:addf' facturas.id_tipo_comprobante %}" class="btn btn-success cli"> + </a></td>
-                        </tr>
-                    {% endfor %}
-                {% endif %}
-            </tbody>
-        </table> 
     </div>
-</div>
+
+
+    <div id="formfact" class="recuadro facturas">
+        <div class="row" style="--bs-gutter-x: 0;">
+            <div style="background-color: #012E40; color: white" class="recuadroarticulos">
+                <h6 style="margin-left: auto; margin-right: auto;">Facturas</h6>
+                <button type="submit" class="boton btn-danger" style="height: 45px; float: right;" onclick="cerrarFact();">Cerrar</button>
+            </div>
+        </div>    
+        <div class="listados">
+            <table class="listadostabla col-md-12 search">
+                <thead>
+                    <th style="color: black">Tipo comprobante</th>        
+                </thead>
+                <tbody>
+                    {% if fact %} 
+                        {% for facturas in fact %}
+                            <tr>
+                                <td style="color:black">{{ facturas.nombre }} {{ facturas.letra }} </td>
+                                <td><a href="{% url 'agregarf:addf' facturas.id_tipo_comprobante %}" class="btn btn-success cli"> + </a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table> 
+        </div>
+    </div>
 
 
 <script>

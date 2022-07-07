@@ -3,13 +3,15 @@ from AppAgregarF.agregarf import AgregarF
 from AppArticulos.models import Articulo
 from AppClientes.models import Clientes
 from AppAgregarCli.agregarcli import Agregarcli
-from AppAgregarV
+from AppAgregarV.agregarv import AgregarV
+from AppAgregarFV.agregarfv import AgregarFV
 from AppFactura.models import ComprobanteC, DetalleC, PuntosDeVenta, TipoComprobante
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from AppAgregar.agregar import Agregar
 from AppFactura.models import ComprobanteV, DetalleV, PuntosDeVenta, TipoComprobante
 from django.contrib import messages
+from AppAgregarV.context_processor import importe_total, importe_totalsiniva
 
 # Create your views here.
 
@@ -39,7 +41,6 @@ def procesar_venta(request):
     agregarv = AgregarV(request)
     agregarcli = Agregarcli(request)
     agregarfv = AgregarFV(request)
-    numerofact = request.GET.get("numerofact")
     for key, value in agregarfv.agregarfv.items():
         f = value["factura_id"]
     if f == 1 or f == 2 or f == 3:
@@ -52,22 +53,21 @@ def procesar_venta(request):
         if f == 1 or f == 2 or f == 3:
             comprobante = ComprobanteV.objects.create(
                 user=request.user, 
-                numero=numerofact,
-                id_punto_de_venta=request.GET.get("puntonumero"),
-                id_tipo_comprobante=f,
-                id_proveedor=cli,
-                monto_total=(value["subtotal"]*21)/100+(value["subtotal"]),
+                id_puntoventa=request.GET.get("puntonumero"),
+                id_tipocomprobante=f,
+                id_cliente=cli,
+                monto_total=importe_total,
             )
             break
         else:
             comprobante = ComprobanteV.objects.create(
                 user=request.user, 
-                numero=numerofact,
-                id_punto_de_venta=request.GET.get("puntonumero"),
-                id_tipo_comprobante=f,
-                id_proveedor=cli,
+                id_puntoventa=request.GET.get("puntonumero"),
+                id_tipocomprobante=f,
+                id_cliente=cli,
                 monto_total=value["subtotal"],
             )
+            break
     venta_lista = list() 
     for key, value in agregarv.agregarv.items():
         b = request.GET.get("bonif")

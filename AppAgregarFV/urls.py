@@ -4,6 +4,6 @@ from . import views
 app_name="agregarfv"
 
 urlpatterns = [
-    path('add/<int:factura_id>/', views.addfv, name="addfv"),
-    path('clear/', views.clearfv, name='clearfv'),
+    path('addfv/<int:factura_id>/', views.addfv, name="addfv"),
+    path('clearfv/', views.clearfv, name='clearfv'),
 ]

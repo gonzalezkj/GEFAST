@@ -72,7 +72,7 @@ class ComprobanteV (models.Model):
     id_puntoventa = models.IntegerField()
     id_tipocomprobante = models.IntegerField()
     id_cliente = models.IntegerField()
-    completed = models.BooleanField(default=False)
+    monto_total = models.FloatField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
 

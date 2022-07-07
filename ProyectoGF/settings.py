@@ -96,6 +96,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'AppAgregar.context_processor.importe_total',
                 'AppAgregar.context_processor.importe_totalsiniva',
+                'AppAgregarV.context_processor.importe_total',
+                'AppAgregarV.context_processor.importe_totalsiniva',
             ],
         },
     },
