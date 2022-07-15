@@ -8,19 +8,19 @@
     <div class="cuadrado">
         <div class="cuadro uno">
             <button type="button" class="botonesabm uno">
-                <a href="{% url 'Abm' %}">CLIENTE</a> 
+                <a style="text-decoration:none; color: black" href="{% url 'Abm' %}">CLIENTE</a> 
             </button>
             <button type="button" class="botonesabm">
                 PROVEEDOR 
             </button>
             <button type="button" class="botonesabm">
-                <a href="{% url 'abmarticulo' %}">ARTICULO</a> 
+                <a style="text-decoration:none; color: black" href="{% url 'abmarticulo' %}">ARTICULO</a> 
             </button>
             <button type="button" class="botonesabm">
-                <a href="{% url 'abmcategoria' %}">CATEGORIA</a> 
+                <a style="text-decoration:none; color: black" href="{% url 'abmcategoria' %}">CATEGORIA</a> 
             </button>
             <button type="button" class="botonesabm">
-                <a href="{% url 'abmusuario' %}">USUARIO</a> 
+                <a style="text-decoration:none; color: black" href="{% url 'abmusuario' %}">USUARIO</a> 
             </button>
             <button type="button" class="botonesabm">
                 ROL 
@@ -29,8 +29,8 @@
 
         <div class="cuadrado dos">
             <div class="cuadro dos">
-                <button type="button" class="botonagregar">
-                    <a class="nav-link stock {% if '/agregar/' in request.path %} active {% endif %} prueba" aria-current="page" href="{% url 'agregar_proveedor' %}"> AGREGAR</a>
+                <button  style="background-color: #F2E3D5;" type="button" class="botonagregar">
+                    <a style="text-decoration:none; color: black" class="nav-link stock {% if '/agregar/' in request.path %} active {% endif %} prueba" aria-current="page" href="{% url 'agregar_proveedor' %}"> AGREGAR</a>
                 </button>
             </div>
 
@@ -39,10 +39,8 @@
                     <thead class="headtabledospr">
                         <tr>
                             <th class="titulotablapr">ID</th>        
-                            <th class="titulotablapr">CUIT</th>
                             <th class="titulotablapr">RAZÓN/NOMBRE</th>
                             <th class="titulotablapr">TELÉFONO</th>
-                            <th class="titulotablapr">EMAIL</th>
                             <th class="titulotablapr">M/E</th>
                         </tr>
                     </thead>
@@ -51,10 +49,8 @@
                             {% for proveedores in pro %}
                             <tr class="proveedorabm">
                                 <td class="contenidotablapr">{{ proveedores.id_proveedor }}</td>        
-                                <td class="contenidotablapr">{{ proveedores.cuit }}</td>
                                 <td class="contenidotablapr">{{ proveedores.razon_social }}</td>
                                 <td class="contenidotablapr">{{ proveedores.telefono }}</td>
-                                <td class="contenidotablapr">{{ proveedores.email }}</td>
                                 <td class="contenidotablapr">
                                     <a href="{% url 'modificar_proveedor' proveedores.id_proveedor %}" class="btn btn-success" style="font-size: 70%;"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <a href="{% url 'modificar_cliente' proveedores.id_proveedor %}" class="btn btn-danger" style="font-size: 70%;"><i class="fa-solid fa-trash-can"></i></a>

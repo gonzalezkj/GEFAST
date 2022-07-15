@@ -1,0 +1,39 @@
+<div class="tabla">
+    <table class="table">
+        <thead class="headtable">
+            <th>Código</th>        
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>U. Medida</th>
+            <th>Precio U.</th>
+            <th>Bonificación</th>
+            <th>Importe</th>
+            <th>% IVA</th>
+            <th>SUBTOTAL</th>
+        </thead>
+        <tbody>
+            <tr>
+                {% if comproc  %}
+                {% if deta %}
+                    <td>{{deta.id_articulo}}</td>
+                    <td>{{value.nombre}}</td>
+                    <td>{{value.cantidad}}</td>
+                    <td>Vacio</td>
+                    <td>{{value.precio}}</td>
+                    <td><input type="number" min="0" max="30" class="form-control" style="height: 26px; width: 120px;" placeholder="Ej: 10" name="bonif" value="0"></td>
+                    <td>{{value.subtotal}}</td>
+                    <td>{{value.totalcant}}</td>
+                    <td>{{value.totalcant}}</td>
+                {% endif %}
+                {% endif %}
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>        
+                <td colspan="12">
+                    <h6 style="float: right; margin-right: 100px;">Monto total: {{ importe_total }}</h6>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>

@@ -1,3 +1,4 @@
+{% extends "AppNav/barra.html" %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -22,44 +23,6 @@
     {% block title %} <title> GEFAST </title> {% endblock %}
   </head>
   <body class="bodybase">
-
-    {% block nav-bar %}
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="box-shadow: 2px 2px 3px 3px #3F4450">
-      <div class="container-fluid">
-        <a class="navbar-brand zz" href="{% url 'Home' %}"><img src="/static/base/img/logoge.png" class="logo" alt="Logo"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link zz yy" aria-current="page" href="{% url 'Stock' %}">Stock</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle zz yy" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Comprobantes
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'Factura' %}">Compras</a></li>
-                <li><a class="dropdown-item" href="{% url 'Facturaventa' %}">Ventas</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link zz yy" href="{% url 'Reportes' %}">Reportes</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link zz yy" href="{% url 'Abm' %}">ABM's</a>
-            </li>
-            <li class="nav-item" style="float: right">
-              <a class="nav-link zz yy" href="{% url 'logout' %}">Salir</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    {% endblock %}
 
     {% block content %}  
 

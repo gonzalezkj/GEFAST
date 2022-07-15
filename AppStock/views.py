@@ -42,7 +42,6 @@ def precio(request):
 
 @login_required
 def agregar_articulo(request):
-
     data = {
         'form': ProductoForm()
     }

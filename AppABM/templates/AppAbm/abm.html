@@ -11,16 +11,16 @@
                 CLIENTE
             </button>
             <button type="button" class="botonesabm">
-                <a href="{% url 'abmproveedor' %}">PROVEEDOR</a> 
+                <a style="text-decoration:none; color: black" href="{% url 'abmproveedor' %}">PROVEEDOR</a> 
             </button>
             <button type="button" class="botonesabm">
-                <a href="{% url 'abmarticulo' %}">ARTICULO</a> 
+                <a style="text-decoration:none; color: black" href="{% url 'abmarticulo' %}">ARTICULO</a> 
             </button>
             <button type="button" class="botonesabm">
-                <a href="{% url 'abmcategoria' %}">CATEGORIA</a> 
+                <a style="text-decoration:none; color: black" href="{% url 'abmcategoria' %}">CATEGORIA</a> 
             </button>
             <button type="button" class="botonesabm">
-                <a href="{% url 'abmusuario' %}">USUARIO</a> 
+                <a style="text-decoration:none; color: black" href="{% url 'abmusuario' %}">USUARIO</a> 
             </button>
             <button type="button" class="botonesabm">
                 ROL 
@@ -29,8 +29,8 @@
 
         <div class="cuadrado dos">
             <div class="cuadro dos">
-                <button type="button" class="botonagregar">
-                    <a class="nav-link stock {% if '/agregar/' in request.path %} active {% endif %} prueba" aria-current="page" href="{% url 'agregar_cliente' %}"> AGREGAR</a>
+                <button  style="background-color: #F2E3D5;" type="button" class="botonagregar">
+                    <a style="text-decoration:none; color: black" class="nav-link stock {% if '/agregar/' in request.path %} active {% endif %} prueba" aria-current="page" href="{% url 'agregar_cliente' %}"> AGREGAR</a>
                 </button>
             </div>
 

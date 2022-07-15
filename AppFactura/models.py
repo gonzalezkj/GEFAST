@@ -1,8 +1,10 @@
 from django.db import models
-from AppArticulos.models import Articulo
 from AppClientes.models import Clientes
 from AppProveedores.models import Proveedores
 from django.contrib.auth import get_user_model
+from django.db.models import signals
+from django.db.models.signals import post_save
+from AppArticulos.models import Articulo
 
 User = get_user_model()
 
@@ -66,6 +68,14 @@ class DetalleC (models.Model):
         verbose_name = "Detalle"
         verbose_name_plural = "DetalleCompras"
         ordering = ['id']
+
+def update_stock(sender, instance, **kwargs):
+    prod = Articulo.objects.filter(Articulo.id_articulo==DetalleC.id_articulo)
+    if prod == DetalleC.id_articulo:
+        prod.cantidad -= instance.cantidad
+    print('Stock actualizado')
+
+signals.post_save.connect(update_stock, sender=DetalleC, dispatch_uid="update_")
 
 class ComprobanteV (models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

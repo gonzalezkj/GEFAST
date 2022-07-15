@@ -1,0 +1,25 @@
+<div class="cregistro" style="margin-left: 200px">
+    <div class="tregistro">
+        <p style="background-color: #012E40; color: white; width: 500px; border: solid white 2px; text-align: center;">FACTURA DE COMPRA</p>
+        <table class="tbregistro">
+            <thead class="htregistro" style="border:solid black;">
+                <th style="border:solid black 2px; padding: 5px; margin-left: 4px;" class="celdareg">Nro comprobante</th>        
+                <th style="border:solid black 2px; padding: 5px; margin-left: 4px;" class="celdareg">Punto de venta</th>
+                <th style="border:solid black 2px; padding: 5px; margin-left: 4px;" class="celdareg">Proveedor</th>
+                <th style="border:solid black 2px; padding: 5px; margin-left: 4px;" class="celdareg">Tipo comprobante</th>        
+                <th style="border:solid black 2px; padding: 5px; margin-left: 4px;" class="celdareg">Monto</th>
+            </thead>
+            <tbody>
+                <tr>
+                {% if comproc %}
+                    <td style="border:solid black 2px; padding: 5px; margin-left: 4px;" class="celdareg">{{ comproc.id}}</td>
+                    <td style="border:solid black 2px; padding: 5px; margin-left: 4px;" class="celdareg">{{ comproc.id_proveedor }}</td>
+                    <td style="border:solid black 2px; padding: 5px; margin-left: 4px;" class="celdareg">{{ comproc.monto_total }}</td>
+                    <td style="border:solid black 2px; padding: 5px; margin-left: 4px;" class="celdareg">{{ comproc.id_proveedor }}</td>
+                    <td style="border:solid black 2px; padding: 5px; margin-left: 4px;" class="celdareg">{{ comproc.monto_total }}</td>
+                {% endif %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

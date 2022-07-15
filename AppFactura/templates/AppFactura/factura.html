@@ -33,7 +33,7 @@
                         <label style="font-weight: bold">Punto de venta:</label>
                     </div>
                     <div class="num-punt-input">
-                        <input type="text" class="" style=" width: 120px;" id="numerofact" name="numerofact">
+                        <input type="text" class="" maxlength="4" minlength="4" style=" width: 120px;" id="numerofact" name="numerofact">
                         <select name="puntonumero" style="width: 120px" aria-label="Default select example">
                         {% for x in puntos %}
                             <option>{{ x.numero }}</option>

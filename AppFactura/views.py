@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from AppAgregarF.agregarf import AgregarF
 from AppArticulos.models import Articulo
 from AppProveedores.models import Proveedores
+from AppArticulos.models import Articulo
 from AppAgregarProv.agregarprov import Agregarprov
 from AppFactura.models import ComprobanteC, DetalleC, PuntosDeVenta, TipoComprobante
 from django.contrib.auth.decorators import login_required
@@ -39,7 +40,9 @@ def procesar_compra(request):
     agregarprov = Agregarprov(request)
     agregarf = AgregarF(request)
     numerofact = request.GET.get("numerofact")
-    montonaso = 0
+    monton = 0
+    montonsiniva = 0
+    f = 1
     for key, value in agregarf.agregarf.items():
         f = value["factura_id"]
     if f == 1 or f == 2 or f == 3:
@@ -49,7 +52,8 @@ def procesar_compra(request):
     for key, value in agregarprov.agregarprov.items():
         prov = value["proveedor_id"]
     for key, value in agregar.agregar.items():
-        montonaso = montonaso + value['totalcant']
+        monton = monton + value['totalcant']
+        montonsiniva = montonsiniva + value['subtotal']
     if f == 1 or f == 2 or f == 3:
         comprobante = ComprobanteC.objects.create(
             user=request.user, 
@@ -57,7 +61,7 @@ def procesar_compra(request):
             id_punto_de_venta=request.GET.get("puntonumero"),
             id_tipo_comprobante=f,
             id_proveedor=prov,
-            monto_total=montonaso,
+            monto_total=monton,
         )
     else:
         comprobante = ComprobanteC.objects.create(
@@ -66,7 +70,7 @@ def procesar_compra(request):
             id_punto_de_venta=request.GET.get("puntonumero"),
             id_tipo_comprobante=f,
             id_proveedor=prov,
-            monto_total=value["subtotal"],
+            monto_total=montonsiniva,
         )
 
     venta_lista = list() 
@@ -85,6 +89,7 @@ def procesar_compra(request):
                 id_comprobante=comprobante,
                 )
         )
+
     
     DetalleC.objects.bulk_create(venta_lista)
 

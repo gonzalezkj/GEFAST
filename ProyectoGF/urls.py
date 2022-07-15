@@ -28,6 +28,7 @@ urlpatterns = [
     path('nota/', include('AppNota.urls')),
     path('stock/', include('AppStock.urls')),
     path('reportes/', include('AppReportes.urls')),
+    path('registros/', include('AppRegistros.urls')),
     path('clientes/', include('AppClientes.urls')),
     path('articulos/', include('AppArticulos.urls')),
     path('agregar/', include('AppAgregar.urls')),

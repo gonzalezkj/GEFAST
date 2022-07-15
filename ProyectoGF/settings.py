@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'AppBase',
     'AppStock',
     'AppReportes',
+    'AppRegistros',
     'AppFactura',
     'AppFacturaV',
     'AppNota',
@@ -59,6 +60,7 @@ INSTALLED_APPS = [
     'AppPerfiles',
     'AppABM',
     'AppOrdenes',
+    'AppNav',
     
     #Aplicaciones de proveedores
     'AppAgregarProv',

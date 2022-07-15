@@ -41,6 +41,9 @@ def procesar_venta(request):
     agregarv = AgregarV(request)
     agregarcli = Agregarcli(request)
     agregarfv = AgregarFV(request)
+    monton = 0
+    montonsiniva = 0
+    f = 1
     for key, value in agregarfv.agregarfv.items():
         f = value["factura_id"]
     if f == 1 or f == 2 or f == 3:
@@ -50,24 +53,24 @@ def procesar_venta(request):
     for key, value in agregarcli.agregarcli.items():
         cli = value["cliente_id"]
     for key, value in agregarv.agregarv.items():
-        if f == 1 or f == 2 or f == 3:
-            comprobante = ComprobanteV.objects.create(
-                user=request.user, 
-                id_puntoventa=request.GET.get("puntonumero"),
-                id_tipocomprobante=f,
-                id_cliente=cli,
-                monto_total=importe_total,
-            )
-            break
-        else:
-            comprobante = ComprobanteV.objects.create(
-                user=request.user, 
-                id_puntoventa=request.GET.get("puntonumero"),
-                id_tipocomprobante=f,
-                id_cliente=cli,
-                monto_total=value["subtotal"],
-            )
-            break
+        monton = monton + value['totalcant']
+        montonsiniva = montonsiniva + value['subtotal']
+    if f == 1 or f == 2 or f == 3:
+        comprobante = ComprobanteV.objects.create(
+            user=request.user, 
+            id_puntoventa=request.GET.get("puntonumero"),
+            id_tipocomprobante=f,
+            id_cliente=cli,
+            monto_total=monton,
+        )
+    else:
+        comprobante = ComprobanteV.objects.create(
+            user=request.user, 
+            id_puntoventa=request.GET.get("puntonumero"),
+            id_tipocomprobante=f,
+            id_cliente=cli,
+            monto_total=montonsiniva,
+        )
     venta_lista = list() 
     for key, value in agregarv.agregarv.items():
         b = request.GET.get("bonif")

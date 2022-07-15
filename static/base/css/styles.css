@@ -68,6 +68,10 @@
     border: solid white;
 }
 
+.bodyordenar {
+    background-color: #F2E3D5;
+}
+
 .table{
     background-color: #F2E3D5;
     color: rgb(0, 0, 0);
@@ -231,7 +235,7 @@
     padding: 8px;
 }
 
-#tablastock tr:nth-child(even){background-color: white;}
+#tablastock tr:nth-child(even){background-color: #F2E3D5;}
 #tablastock tr:hover{background-color: #ddd;}
 #tablastock th{
     padding-top: 12px;
@@ -457,6 +461,36 @@
     right: 0;
 }
 
+/* CSS DE REGISTROS */
+
+.cregistro {
+    margin-top: 100px;
+    text-align: -webkit-center;
+}
+
+.tregistro{
+}
+
+.tbregistro{
+    background-color: #F2E3D5;
+    color: rgb(0, 0, 0);
+    border: solid white;
+}
+
+.htregistro{
+    background-color: #012E40;
+    color: white;
+    border-radius: 10px;
+    margin-left: 20px;
+}
+
+.celdareg{
+    width: 200px;
+    text-align: left;
+    padding: 10px;
+    text-align: -webkit-center;
+}
+
 /* HTML DE ABM */ 
 
 .todo{
@@ -477,9 +511,8 @@
     width: 60%;
     height: 40%;
     border-radius:4px;
+    background-color: #F2E3D5;
 }
-
-
 
 .cuadrado.dos{
     display: inline-block;
@@ -498,7 +531,7 @@
 }
 
 .cuadro.uno{
-    background-color: black;
+    background-color: #012E40;
     text-align: center;
     width: 200px;
     height: 700px;
@@ -514,7 +547,7 @@
 }
 
 .cuadro.tres{
-    background-color: black;
+    background-color: #012E40;
     text-align: center;
     width: 500px;
     height: 580px;
@@ -526,7 +559,7 @@
 }
 
 .headtabledos {
-    background-color: black;
+    background-color: #012E40;
     color: white;
 }
 
@@ -546,16 +579,18 @@
 }
 
 .headtabledospr {
-    background-color: black;
+    background-color: #012E40;
     color: white;
 }
 
 .titulotablapr {
-    display: table-cell;
+    display: inline-block !important;
+    width: 25% !important; 
 }
 
 .contenidotablapr {
-    display: table-cell;
+    display: inline-block !important;
+    width: 25% !important;
 }
 
 .articulosabm {
@@ -564,7 +599,7 @@
 }
 
 .headtabledosar {
-    background-color: black;
+    background-color: #012E40;
     color: white;
 }
 
@@ -584,7 +619,7 @@
 }
 
 .headtabledosca {
-    background-color: black;
+    background-color: #012E40;
     color: white;
 }
 
@@ -604,7 +639,7 @@
 }
 
 .headtabledosus {
-    background-color: black;
+    background-color: #012E40;
     color: white;
 }
 
@@ -617,3 +652,4 @@
     display: inline-block;
     width: 16%;
 }
+
