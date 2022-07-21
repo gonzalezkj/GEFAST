@@ -246,7 +246,7 @@
 }
 
 #seccionstock{
-    margin-top: 80px;
+    margin-top: 48px;
     margin-left: 400px;
     padding: 20px;
     display: grid;
@@ -357,6 +357,19 @@
 
 /* HTML DE FACTURA */
 
+.titulocentro{
+    margin-top: 40px;
+    text-align: -webkit-center;
+}
+
+.titulofact {
+   background-color: #012E40; 
+   color: white; 
+   width: 500px;
+   border: solid white 2px;
+   text-align: -webkit-center;
+}
+
 .recuadro.uno{
     padding: 10px;
     background-color: #F2E3D5;
@@ -464,7 +477,7 @@
 /* CSS DE REGISTROS */
 
 .cregistro {
-    margin-top: 100px;
+    margin-top: 40px;
     text-align: -webkit-center;
 }
 
@@ -472,6 +485,7 @@
 }
 
 .tbregistro{
+    margin-top: 70px;
     background-color: #F2E3D5;
     color: rgb(0, 0, 0);
     border: solid white;
@@ -653,3 +667,12 @@
     width: 16%;
 }
 
+/* HTML DE ABM */ 
+
+.reportes{
+    margin-top: 50px;
+    text-align: -webkit-center;
+    display: flex;
+    place-content: center;
+    column-gap: 100px;
+}

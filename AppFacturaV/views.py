@@ -84,6 +84,7 @@ def procesar_venta(request):
                 monto_unitario=value["precio"],
                 porcentaje_iva=ivapor,
                 bonificacion=b,
+                subtotal=value['subtotal'],
                 id_comprobante=comprobante,
                 )
         )

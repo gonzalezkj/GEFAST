@@ -59,6 +59,7 @@ class DetalleC (models.Model):
     monto_unitario = models.FloatField()
     porcentaje_iva = models.FloatField()
     bonificacion = models.IntegerField()
+    subtotal = models.FloatField()
     id_comprobante = models.ForeignKey(ComprobanteC, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -101,6 +102,7 @@ class DetalleV (models.Model):
     monto_unitario = models.FloatField()
     porcentaje_iva = models.FloatField()
     bonificacion = models.IntegerField()
+    subtotal = models.FloatField()
     id_comprobante = models.ForeignKey(ComprobanteV, on_delete=models.CASCADE)
 
     def __str__(self):

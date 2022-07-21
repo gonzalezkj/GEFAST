@@ -1,4 +1,5 @@
-<div class="tabla">
+<div class="tabla" style="text-align: -webkit-center;" >
+    <p style="text-align: center;">FACTURA </p>
     <table class="table">
         <thead class="headtable">
             <th>Código</th>        
@@ -12,26 +13,40 @@
             <th>SUBTOTAL</th>
         </thead>
         <tbody>
-            <tr>
-                {% if comproc  %}
-                {% if deta %}
-                    <td>{{deta.id_articulo}}</td>
-                    <td>{{value.nombre}}</td>
-                    <td>{{value.cantidad}}</td>
-                    <td>Vacio</td>
-                    <td>{{value.precio}}</td>
-                    <td><input type="number" min="0" max="30" class="form-control" style="height: 26px; width: 120px;" placeholder="Ej: 10" name="bonif" value="0"></td>
-                    <td>{{value.subtotal}}</td>
-                    <td>{{value.totalcant}}</td>
-                    <td>{{value.totalcant}}</td>
+            {% if comproc  %}
+                    {% if deta %}
+                        {% if art %}
+                            {% for x in deta %} 
+                                {% for i in art %}
+                                    {% if x.id_comprobante_id == comproc.id %} 
+                                        {% if x.id_articulo == i.id_articulo %} 
+                                            <tr>
+                                                <td style="text-align: center;">{{x.id_articulo}}</td>
+                                                <td style="text-align: center;">{{i.nombre}}</td>
+                                                <td style="text-align: center;">{{x.cantidad}}</td>
+                                                <td style="text-align: center;">Vacio</td>
+                                                <td style="text-align: center;">{{x.monto_unitario}}</td>
+                                                <td style="text-align: center;">Vacio</td>
+                                                {% if x.porcentaje_iva == 21 %} 
+                                                    <td style="text-align: center;">{{ x.monto_unitario}}</td>
+                                                {% else %} 
+                                                    <td style="text-align: center;">{{ x.monto_unitario }}</td>
+                                                {% endif %}
+                                                <td style="text-align: center;">{{x.porcentaje_iva}}</td>
+                                                <td style="text-align: center;">{{comproc.monto_total}}</td>
+                                            </tr>
+                                    {% endif %}
+                                {% endif %} 
+                            {% endfor %} 
+                        {% endfor %} 
+                    {% endif %}
                 {% endif %}
-                {% endif %}
-            </tr>
+            {% endif %}
         </tbody>
         <tfoot>
             <tr>        
                 <td colspan="12">
-                    <h6 style="float: right; margin-right: 100px;">Monto total: {{ importe_total }}</h6>
+                    <h6 style="float: right; font-size: 15px;">Monto total: {{comproc.monto_total}} </h6>
                 </td>
             </tr>
         </tfoot>

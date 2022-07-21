@@ -22,7 +22,7 @@ def registrosventa(request):
 
 def selectcompra(request, id):
     comprobante = get_object_or_404(ComprobanteC, id = id)
-    detalle = get_object_or_404(DetalleC, id_comprobante = id )
+    detalle = DetalleC.objects.all()
     articulo = Articulo.objects.all() 
     return render(request, 'AppRegistros/selectcompra.html', {'comproc':comprobante, 'deta':detalle, 'art':articulo})
 
