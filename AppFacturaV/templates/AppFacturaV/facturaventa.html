@@ -37,7 +37,7 @@
                     </div>
                     <div class="num-punt-input">
                         <input type="text" class="" style=" width: 120px;" id="numerofact" name="numerofact">
-                        <select name="puntonumero" style="width: 120px" aria-label="Default select example">
+                        <select name="puntonumero" style="width: 120px; text-align: center;" aria-label="Default select example">
                         {% for x in puntos %}
                             <option>{{ x.numero }}</option>
                         {% endfor %}
@@ -246,7 +246,7 @@
                             name="buscarart" value="{{ request.GET.buscar }}">
                             <span class="input-group-list">
                                 <i class="icon icon-search"></i>
-                                <button type="submit" class="boton btn-success" style="height: 45px;">Buscar</button>
+                                <button type="submit" class="boton btn-success" style="height: 38px;">Buscar</button>
                             </span>
                         </div>
                     </div>
@@ -293,7 +293,7 @@
                             name="buscarcli" value="{{ request.GET.buscar }}">
                             <span class="input-group-list">
                                 <i class="icon icon-search"></i>
-                                <button type="submit" class="boton btn-success" style="height: 45px;">Buscar</button>
+                                <button type="submit" class="boton btn-success" style="height: 38px;">Buscar</button>
                             </span>
                         </div>
                     </div>

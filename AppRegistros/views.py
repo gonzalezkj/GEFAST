@@ -4,6 +4,7 @@ from AppArticulos.models import Articulo
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
+from AppProveedores.models import Proveedores
 import pdfkit
 
 # Create your views here.
@@ -11,8 +12,8 @@ import pdfkit
 def registros(request): 
     registrocompra = ComprobanteC.objects.all()
     tipocomprobante = TipoComprobante.objects.all() 
-
-    return render(request, "AppRegistros/registros.html", {'regcom':registrocompra, 'tipo':tipocomprobante})
+    proveedor = Proveedores.objects.all()
+    return render(request, "AppRegistros/registros.html", {'regcom':registrocompra, 'tipo':tipocomprobante, 'prov':proveedor})
 
 def registrosventa(request): 
     registroventa = ComprobanteV.objects.all()
@@ -24,6 +25,7 @@ def selectcompra(request, id):
     comprobante = get_object_or_404(ComprobanteC, id = id)
     detalle = DetalleC.objects.all()
     articulo = Articulo.objects.all() 
+
     return render(request, 'AppRegistros/selectcompra.html', {'comproc':comprobante, 'deta':detalle, 'art':articulo})
 
 def pdf(request, id):

@@ -37,7 +37,7 @@
                     </div>
                     <div class="num-punt-input">
                         <input type="text" class="" maxlength="4" minlength="4" style=" width: 120px;" id="numerofact" name="numerofact">
-                        <select name="puntonumero" style="width: 120px" aria-label="Default select example">
+                        <select name="puntonumero" style="width: 120px; text-align: center;" aria-label="Default select example">
                         {% for x in puntos %}
                             <option>{{ x.numero }}</option>
                         {% endfor %}
@@ -168,7 +168,7 @@
                                 <button style="float: left; width: 150px" type="submit" class="btn_facturas"><a href="{% url 'agregar:clear' %}" style="text-decoration: none; color: white;"> Vaciar factura </a></button>
                             {% endif %}
                             {% if request.session.agregar.items and request.session.agregarprov.items %}
-                                    <button style="float: left; width: 150px; margin-left: 5px" type="submit" class="btn_facturas"> Crear orden </button>
+                                    <button style="float: left; width: 150px; margin-left: 5px" type="submit" id="crearorden" onclick="ordenCreada();" class="btn_facturas"> Crear orden </button>
                             {% endif %}
                             {% if request.session.agregarf.items %}
                                 {% for key, valuee in request.session.agregarf.items %}
@@ -246,7 +246,7 @@
                             name="buscarart" value="{{ request.GET.buscar }}">
                             <span class="input-group-list">
                                 <i class="icon icon-search"></i>
-                                <button type="submit" class="boton btn-success" style="height: 45px;">Buscar</button>
+                                <button type="submit" class="boton btn-success" style="height: 38px;">Buscar</button>
                             </span>
                         </div>
                     </div>
@@ -293,7 +293,7 @@
                             name="buscarcli" value="{{ request.GET.buscar }}">
                             <span class="input-group-list">
                                 <i class="icon icon-search"></i>
-                                <button type="submit" class="boton btn-success" style="height: 45px;">Buscar</button>
+                                <button type="submit" class="boton btn-success" style="height: 38px;">Buscar</button>
                             </span>
                         </div>
                     </div>
@@ -370,11 +370,27 @@
 
     function checkforblank() {
         if (document.getElementById('numerofact').value == ""){
-            Swal.fire("Completar campo 'Número de factura' ")
+            Swal.fire({
+                title: "Error al intentar crear la orden",
+                text: "Completar campo 'número de factura'",
+                type: "danger",
+                timer: 3000,
+            }),
             document.getElementById('numerofact').style.borderColor = "red";
             return false;
         }
     }
+
+    function ordenCreada() {
+        if (document.getElementById('crearorden')){
+            Swal.fire({
+                title: "Mensaje de información",
+                text: "Orden creada correctamente",
+                type: "danger",
+            })
+        }
+    }
+
 
 </script>
 

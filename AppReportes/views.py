@@ -10,7 +10,14 @@ def reportes(request):
 
     detalles = DetalleV.objects.all()
     articulos = Articulo.objects.all()
-    comprobantes = ComprobanteC.objects.filter(date__range=["2022-07-01", datetime.now])
+    comprojul = ComprobanteC.objects.filter(created__range=["2022-07-01", "2022-07-31"])
+    comproago = ComprobanteC.objects.filter(created__range=["2022-08-01", "2022-08-31"])
+    cantjul = 0
+    cantago = 0
+    for comprob in comprojul:
+        cantjul = cantjul + 1
+    for comprob in comproago:
+        cantago = cantago + 1
     
     productos = [0,0,0,0,0,0,0,0]
     for det in detalles:
@@ -33,4 +40,4 @@ def reportes(request):
 
 
 
-    return render(request, "AppReportes/reportes.html", {'det':detalles, 'prod':productos, 'art':articulos, 'compro':comprobantes})
+    return render(request, "AppReportes/reportes.html", {'det':detalles, 'prod':productos, 'art':articulos, 'cantjul':cantjul, 'cantago':cantago })

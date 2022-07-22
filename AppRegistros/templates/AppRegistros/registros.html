@@ -11,6 +11,7 @@
             <thead class="htregistro">
                 <th class="celdareg">Tipo comprobante</th>        
                 <th class="celdareg">Nro comprobante</th>
+                <th class="celdareg">Proveedor</th>  
                 <th class="celdareg">Monto</th>
                 <th class="celdareg">Descargar</th>
             </thead>
@@ -20,12 +21,17 @@
                         {% for rc in regcom %}
                             {% for x in tipo %}
                                 {% if rc.id_tipo_comprobante == x.id_tipo_comprobante %}
-                                    <tr>
-                                        <td class="celdareg">{{x.nombre}} {{x.letra}}</td>
-                                        <td class="celdareg">{{rc.numero}}</td>
-                                        <td class="celdareg">{{rc.monto_total}}</td>
-                                        <td class="celdareg"><a href="{% url 'export-pdf' rc.id %}"><i class="fa-solid fa-file-pdf fa-lg"></i></a></td>
-                                    </tr>
+                                    {% for z in prov %} 
+                                        {% if z.id_proveedor == rc.id_proveedor %}
+                                            <tr>
+                                                <td class="celdareg">{{x.nombre}} {{x.letra}}</td>
+                                                <td class="celdareg">{{rc.numero}}</td>
+                                                <td class="celdareg">{{ z.razon_social }}</td>
+                                                <td class="celdareg">$  {{rc.monto_total}}</td>
+                                                <td class="celdareg"><a href="{% url 'export-pdf' rc.id %}"><i class="fa-solid fa-file-pdf fa-lg"></i></a></td>
+                                            </tr>
+                                        {% endif %} 
+                                    {% endfor %}
                                 {% endif %} 
                             {% endfor %} 
                         {% endfor %} 

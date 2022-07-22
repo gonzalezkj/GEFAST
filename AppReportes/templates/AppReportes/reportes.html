@@ -45,11 +45,25 @@
             }]
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+            legend: {
+            labels: {
+                fontColor: "white",
             }
+        },
+        scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        beginAtZero: true
+                    }
+                }], 
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        beginAtZero: true
+                    }
+                }]
+            },
         }
     });
 
@@ -62,6 +76,12 @@
     'Abril',
     'Mayo',
     'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
     ];
 
     const myChartDos = new Chart(ctxDos, {
@@ -70,11 +90,32 @@
             labels: labels,
             datasets: [{
                 label: 'Facturas de compra',
-                data: [1, 10, 5, 2, 20, 30, 45],
+                data: [0, 0, 0, {{ cantjul }}, {{ cantago }}, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: ['rgba(255, 99, 132, 0.2)'],
                 borderColor: ['rgba(255, 99, 132, 1)'],
-                borderWidth: 1
+                borderWidth: 1,
             }]
+        },
+        options: {
+            legend: {
+            labels: {
+                fontColor: "white",
+            }
+        },
+        scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        beginAtZero: true
+                    }
+                }], 
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        beginAtZero: true
+                    }
+                }]
+            },
         }
     });
 

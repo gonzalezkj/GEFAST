@@ -3,7 +3,9 @@
 
 
 {% block content %}  
-
+<div class="titulocentro">
+    <p class="titulofact">ALTA, BAJA Y MODIFICACIÓN</p>
+</div>
 <div class="todo">
     <div class="cuadrado">
         <div class="cuadro uno">
@@ -22,15 +24,12 @@
             <button type="button" class="botonesabm">
                 <a style="text-decoration:none; color: black" href="{% url 'abmusuario' %}">USUARIO</a> 
             </button>
-            <button type="button" class="botonesabm">
-                ROL 
-            </button>
         </div>
 
         <div class="cuadrado dos">
             <div class="cuadro dos">
                 <button  style="background-color: #F2E3D5;" type="button" class="botonagregar">
-                    <a style="text-decoration:none; color: black" class="nav-link stock {% if '/agregar/' in request.path %} active {% endif %} prueba" aria-current="page" href="{% url 'agregar_cliente' %}"> AGREGAR</a>
+                    <a style="text-decoration:none; color: black; margin-top: 25px;" class="nav-link stock {% if '/agregar/' in request.path %} active {% endif %} prueba" aria-current="page" href="{% url 'agregar_cliente' %}"> AGREGAR</a>
                 </button>
             </div>
 
