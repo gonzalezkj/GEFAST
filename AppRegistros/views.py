@@ -25,8 +25,10 @@ def selectcompra(request, id):
     comprobante = get_object_or_404(ComprobanteC, id = id)
     detalle = DetalleC.objects.all()
     articulo = Articulo.objects.all() 
+    proveedor = Proveedores.objects.all()
+    tip = TipoComprobante.objects.all()
 
-    return render(request, 'AppRegistros/selectcompra.html', {'comproc':comprobante, 'deta':detalle, 'art':articulo})
+    return render(request, "AppRegistros/selectcompra.html", {'comproc':comprobante, 'deta':detalle, 'art':articulo, 'tipocompro':tip, 'prov':proveedor})
 
 def pdf(request, id):
     t = get_object_or_404(ComprobanteC, id=id)

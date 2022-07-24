@@ -255,6 +255,9 @@
 #seccionstock{
     margin-left: 500px;
     width: 70%;
+    height: 606px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #seccionstockdos{
@@ -688,12 +691,4 @@
     display: flex;
     place-content: center;
     column-gap: 100px;
-}
-
-
-/* HTML DE PDF */ 
-
-.datosfacturac {
-    display: grid;
-    grid-template-columns: 50% 50%;
 }

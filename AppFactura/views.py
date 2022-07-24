@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from AppAgregarF.agregarf import AgregarF
 from AppArticulos.models import Articulo
 from AppProveedores.models import Proveedores
+from AppClientes.models import CondicionFiscal
 from AppArticulos.models import Articulo
 from AppAgregarProv.agregarprov import Agregarprov
 from AppFactura.models import ComprobanteC, DetalleC, PuntosDeVenta, TipoComprobante
@@ -19,6 +20,7 @@ def factura(request):
     proveedores = Proveedores.objects.all()
     facturas = TipoComprobante.objects.all()
     puntosdeventa = PuntosDeVenta.objects.all()
+    condicion = CondicionFiscal.objects.all()
     p = Paginator(Articulo.objects.all(),4)
     page = request.GET.get('page')
     articulos = p.get_page(page)
@@ -31,7 +33,7 @@ def factura(request):
     if queryset:
         proveedores = Proveedores.objects.filter(razon_social = queryset)
 
-    return render(request, "AppFactura/factura.html",  {"prov":proveedores, "art":articulo, "fact":facturas, "articulos":articulos, "puntos":puntosdeventa})
+    return render(request, "AppFactura/factura.html",  {"prov":proveedores, "art":articulo, "fact":facturas, "articulos":articulos, "puntos":puntosdeventa, "condicion":condicion})
 
 
 @login_required

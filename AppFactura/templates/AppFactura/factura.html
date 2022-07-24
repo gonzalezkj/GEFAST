@@ -85,7 +85,13 @@
                         {% else %}
                             {% if request.session.agregarprov.items %}
                                 {% for key, value in request.session.agregarprov.items %}
-                                    <input value="{{ value.cuit }}" class="recuadrotresinput" disabled> 
+                                    {% if condicion %} 
+                                        {% for x in condicion %} 
+                                            {% if value.condicion == x.id_condicion_fiscal %}
+                                                <input value="{{ x.condicion_fiscal }}" class="recuadrotresinput" disabled> 
+                                            {% endif %} 
+                                        {% endfor %} 
+                                    {% endif %}
                                 {% endfor %}
                             {% endif %}
                         {% endif %}
@@ -96,7 +102,7 @@
                         {% else %}
                             {% if request.session.agregarprov.items %}
                                 {% for key, value in request.session.agregarprov.items %}
-                                <input value="{{ value.condicion }}" class="recuadrotresinput" disabled>
+                                <input value="{{ value.cuit }}" class="recuadrotresinput" disabled>
                                 {% endfor %}
                             {% endif %}
                         {% endif %}

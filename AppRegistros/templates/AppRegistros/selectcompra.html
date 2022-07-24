@@ -1,31 +1,68 @@
-<div class="tabla" style="text-align: -webkit-center;" >
-    <p style="text-align: center;">ORIGINAL </p>
+<div class="tabla" style="text-align: -webkit-center; width: 800px; margin-left: auto; margin-right: auto;" >
+    <p style="text-align: center; border: solid black 1px">ORIGINAL </p>
     <div class="datosfacturac">
-        <div style="width: 50%;">
-            <label style="font-weight: bold">Razón social:</label>
-            <label style="font-weight: bold">Domicilio comercial:</label>               
-            <label style="font-weight: bold">Condición frente al IVA: Responsable Monotributo </label>
+        <div style="border: solid black 1px; text-align: -webkit-left; float:left; width: 390px; height:100px;">
+            <label style="margin-left: 5px; margin-top: 50px; margin-bottom: 50px;">Razón social: Kevin Joel Gonzalez</label>
+            <br>
+            <label style="margin-left: 5px;">Domicilio comercial: Calle Falsa 123</label>    
+            <br>           
+            <label style="margin-left: 5px;">Condición frente al IVA: Responsable Inscripto </label>
         </div>
-        <div style="width: 50%;">
-            <label style="font-weight: bold">FACTURA</label>
-            <label style="font-weight: bold">Punto de venta: </label>    
-            <label style="font-weight: bold">Compra nro: </label>       
-            <label style="font-weight: bold">Fecha de Emisión: </label>                  
-            <label style="font-weight: bold">CUIT</label>
+        <div style="border: solid black 1px; text-align: -webkit-left; float:left; width: 392px; margin-left: 10px; height:100px;">
+            <label style="margin-left: 5px;">FACTURA</label>
+            <br>
+            {% if comproc %} 
+                <label style="margin-left: 5px;">Compra nro: {{ comproc.id }} </label>       
+                <br>
+                <label style="margin-left: 5px;">Fecha de Emisión: {{ comproc.created }}</label>   
+                <br>               
+                <label style="margin-left: 5px;">CUIT: 123456789111 </label>
+            {% endif %}
         </div>
     </div>
 
-    <table class="table">
-        <thead class="headtable">
-            <th>Código</th>        
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>U. Medida</th>
-            <th>Precio U.</th>
-            <th>Bonificación</th>
-            <th>Importe</th>
-            <th>% IVA</th>
-            <th>SUBTOTAL</th>
+    <div>
+        {% if comproc %}
+            {% if tipocompro %}
+                {% for x in tipocompro %}
+                    {% if comproc.id_tipo_comprobante == x.id_tipo_comprobante %}
+                        <p style="text-align: center; border: solid black 1px; height: 20px; margin-top: 140px"> {{x.nombre}} {{x.letra}}</p>
+                    {% endif %} 
+                {% endfor %} 
+            {% endif %} 
+        {% endif %}
+    </div> 
+
+    <div style="width: 796px; border: solid black 1px; margin-bottom: 15px; text-align: -webkit-left;">
+        {% if comproc %}
+            {% if prov %}
+                {% for x in prov %} 
+                    {% if comproc.id_proveedor == x.id_proveedor %}
+                        <label style="margin-left: 5px;"> CUIT: {{ x.cuit }}</label>
+                        <br>
+                        <label style="margin-left: 5px;"> Condición frente al IVA: {{ x.condicion }} </label>
+                        <br>
+                        <label style="margin-left: 5px;"> Condición de venta: Contado </label> 
+                        <br>
+                        <label style="margin-left: 5px;">Punto de venta: {{ comproc.id_punto_de_venta }} </label>    
+                        <br>
+                    {% endif %} 
+                {% endfor %} 
+            {% endif %} 
+        {% endif %}
+    </div>
+
+    <table class="tablepdf" style="border: solid black 1px !important; width: 800px;">
+        <thead class="headtablepdf">
+            <th style="border: solid black 1px !important;">Código</th>        
+            <th style="border: solid black 1px !important;">Producto</th>
+            <th style="border: solid black 1px !important;">Cantidad</th>
+            <th style="border: solid black 1px !important;">U. Medida</th>
+            <th style="border: solid black 1px !important;">Precio U.</th>
+            <th style="border: solid black 1px !important;">Bonificación</th>
+            <th style="border: solid black 1px !important;">Importe</th>
+            <th style="border: solid black 1px !important;">% IVA</th>
+            <th style="border: solid black 1px !important;">SUBTOTAL</th>
         </thead>
         <tbody>
             {% if comproc  %}
@@ -36,19 +73,19 @@
                                     {% if x.id_comprobante_id == comproc.id %} 
                                         {% if x.id_articulo == i.id_articulo %} 
                                             <tr>
-                                                <td style="text-align: center;">{{x.id_articulo}}</td>
-                                                <td style="text-align: center;">{{i.nombre}}</td>
-                                                <td style="text-align: center;">{{x.cantidad}}</td>
-                                                <td style="text-align: center;">Vacio</td>
-                                                <td style="text-align: center;">{{x.monto_unitario}}</td>
-                                                <td style="text-align: center;">Vacio</td>
+                                                <td style="text-align: center; border: solid black 1px;">{{x.id_articulo}}</td>
+                                                <td style="text-align: center; border: solid black 1px;">{{i.nombre}}</td>
+                                                <td style="text-align: center; border: solid black 1px;">{{x.cantidad}}</td>
+                                                <td style="text-align: center; border: solid black 1px;">Vacio</td>
+                                                <td style="text-align: center; border: solid black 1px;">{{x.monto_unitario}}</td>
+                                                <td style="text-align: center; border: solid black 1px;">-</td>
                                                 {% if x.porcentaje_iva == 21 %} 
-                                                    <td style="text-align: center;">{{ x.monto_unitario}}</td>
+                                                    <td style="text-align: center; border: solid black 1px;">{{ x.monto_unitario}}</td>
                                                 {% else %} 
-                                                    <td style="text-align: center;">{{ x.monto_unitario }}</td>
+                                                    <td style="text-align: center; border: solid black 1px;">{{ x.monto_unitario }}</td>
                                                 {% endif %}
-                                                <td style="text-align: center;">{{x.porcentaje_iva}}</td>
-                                                <td style="text-align: center;">{{comproc.monto_total}}</td>
+                                                <td style="text-align: center; border: solid black 1px;">{{x.porcentaje_iva}}</td>
+                                                <td style="text-align: center; border: solid black 1px;">{{comproc.monto_total}}</td>
                                             </tr>
                                     {% endif %}
                                 {% endif %} 
@@ -58,12 +95,12 @@
                 {% endif %}
             {% endif %}
         </tbody>
-        <tfoot>
+        <tfoot >
             <tr>        
                 <td colspan="12">
-                    <h6 style="float: right; font-size: 15px;">Monto total: {{comproc.monto_total}} </h6>
+                    <label style="float: right; font-weight: bold; font-size: 15px; margin-bottom: auto; margin-right: 2px; padding: 2px; border: solid black 1px;">MONTO TOTAL: {{comproc.monto_total}} </label>
                 </td>
-            </tr>
+            </tr>   
         </tfoot>
     </table>
     </div>

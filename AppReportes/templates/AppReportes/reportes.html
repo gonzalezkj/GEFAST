@@ -10,8 +10,8 @@
     <p class="titulofact">VISUALIZACIÓN DE DATOS</p>
 </div>
 <div class="reportes" style="margin-top: 50px">
-<canvas id="myChart" style="width:100%; max-width:600px; background-color: #012E40; border: solid #F2E3D5 4px; right: 100% !important;"></canvas>
-<canvas id="myChartDos" style="width:100%; max-width:600px; background-color: #012E40; border: solid #F2E3D5 4px"></canvas>
+<canvas id="myChart" style="width:100%; max-width:650px; background-color: #012E40; border: solid #F2E3D5 4px; right: 100% !important;"></canvas>
+<canvas id="myChartDos" style="width:100%; max-width:650px; background-color: #012E40; border: solid #F2E3D5 4px"></canvas>
 <script>
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
@@ -90,7 +90,7 @@
             labels: labels,
             datasets: [{
                 label: 'Facturas de compra',
-                data: [0, 0, 0, {{ cantjul }}, {{ cantago }}, 0, 0, 0, 0, 0, 0, 0],
+                data: [0, 0, 0, 0, 0, 0, {{ cantjul }}, {{ cantago }}, 0, 0, 0, 0],
                 backgroundColor: ['rgba(255, 99, 132, 0.2)'],
                 borderColor: ['rgba(255, 99, 132, 1)'],
                 borderWidth: 1,
