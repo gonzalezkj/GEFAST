@@ -21,7 +21,8 @@ def factura(request):
     facturas = TipoComprobante.objects.all()
     puntosdeventa = PuntosDeVenta.objects.all()
     condicion = CondicionFiscal.objects.all()
-    p = Paginator(Articulo.objects.all(),4)
+    articulosprueba = Articulo.objects.get_queryset().order_by('id_articulo')
+    p = Paginator(articulosprueba, 4)
     page = request.GET.get('page')
     articulos = p.get_page(page)
 
@@ -33,7 +34,7 @@ def factura(request):
     if queryset:
         proveedores = Proveedores.objects.filter(razon_social = queryset)
 
-    return render(request, "AppFactura/factura.html",  {"prov":proveedores, "art":articulo, "fact":facturas, "articulos":articulos, "puntos":puntosdeventa, "condicion":condicion})
+    return render(request, "AppFactura/factura.html",  {"prov":proveedores, "art":articulo, "fact":facturas, "articulos": articulos, "puntos":puntosdeventa, "condicion":condicion})
 
 
 @login_required
@@ -75,24 +76,42 @@ def procesar_compra(request):
             monto_total=montonsiniva,
         )
 
-    venta_lista = list() 
-    for key, value in agregar.agregar.items():
-        b = request.GET.get("bonif")
-        if b == '':
-            b = int(1)
-        venta_lista.append(
-            DetalleC(
-                user=request.user,
-                id_articulo=key,
-                cantidad=value["cantidad"],
-                monto_unitario=value["precio"],
-                porcentaje_iva=ivapor,
-                bonificacion=b,
-                subtotal=value["subtotal"],
-                id_comprobante=comprobante,
-                )
-        )
-
+    if f == 1 or f == 2 or f == 3:
+        venta_lista = list() 
+        for key, value in agregar.agregar.items():
+            b = request.GET.get("bonif")
+            if b == '':
+                b = int(1)
+            venta_lista.append(
+                DetalleC(
+                    user=request.user,
+                    id_articulo=key,
+                    cantidad=value["cantidad"],
+                    monto_unitario=value["precio"],
+                    porcentaje_iva=ivapor,
+                    bonificacion=b,
+                    subtotal=value["subtotal"]*1.21,
+                    id_comprobante=comprobante,
+                    )
+            )
+    else:
+        venta_lista = list() 
+        for key, value in agregar.agregar.items():
+            b = request.GET.get("bonif")
+            if b == '':
+                b = int(1)
+            venta_lista.append(
+                DetalleC(
+                    user=request.user,
+                    id_articulo=key,
+                    cantidad=value["cantidad"],
+                    monto_unitario=value["precio"],
+                    porcentaje_iva=ivapor,
+                    bonificacion=b,
+                    subtotal=value["subtotal"],
+                    id_comprobante=comprobante,
+                    )
+            )
     
     DetalleC.objects.bulk_create(venta_lista)
 

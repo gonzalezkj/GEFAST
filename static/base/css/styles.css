@@ -1,3 +1,24 @@
+.contenedorhome{
+    text-align: center;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gefast{
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 50px;
+    opacity: 0.5;
+}
+
+.gefastlogo{
+    border-radius: 10px;
+    justify-self: right;
+    width: 100px;
+    height: 100px;
+}
+
 .navbar.navbar-expand-lg.navbar-light.bg-light {
     padding: 20px;
     background-color:#012E40 !important; 
@@ -120,13 +141,17 @@
     align-items: center;
     background-color:  #F2E3D5;
     width: 350px; 
-    height: 450px;
     margin-left: auto; 
     margin-right: auto;
     margin-top: 65px;
     border: solid black;
 }
 
+.listadosfact {
+    height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 .listadostabla {
     margin-left: 20px;
@@ -184,6 +209,7 @@
     background: #024959;
     background-attachment: fixed;
 }
+
 
 .btn.btn-sm.btn.success.suma {
     color: white;
@@ -498,10 +524,14 @@
 }
 
 .tregistro{
+    margin-top: 70px;
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: fit-content;
 }
 
 .tbregistro{
-    margin-top: 70px;
     background-color: #F2E3D5;
     color: rgb(0, 0, 0);
     border: solid white;
@@ -581,6 +611,8 @@
     text-align: center;
     width: 500px;
     height: 480px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .clientesabm {
@@ -683,7 +715,19 @@
     width: 16%;
 }
 
-/* HTML DE ABM */ 
+.addproductabm {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px !important;
+    margin: auto;
+    background-color:  #012E40;
+    border: solid 1px white;
+    border-radius: 5px;
+    padding: 10px;
+    width: 40%;
+}
+
+/* HTML DE REPORTES */ 
 
 .reportes{
     margin-top: 50px;

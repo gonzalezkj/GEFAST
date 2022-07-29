@@ -19,7 +19,7 @@ def reportes(request):
     for comprob in comproago:
         cantago = cantago + 1
     
-    productos = [0,0,0,0,0,0,0,0]
+    productos = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     for det in detalles:
         if det.id_articulo == 1:
             productos[0] = productos[0] + det.cantidad
@@ -35,8 +35,24 @@ def reportes(request):
             productos[5] = productos[5] + det.cantidad
         elif det.id_articulo == 7:
             productos[6] = productos[6] + det.cantidad
-        else:
+        elif det.id_articulo == 8:
             productos[7] = productos[7] + det.cantidad
+        elif det.id_articulo == 9:
+            productos[8] = productos[8] + det.cantidad
+        elif det.id_articulo == 10:
+            productos[9] = productos[9] + det.cantidad
+        elif det.id_articulo == 11:
+            productos[10] = productos[10] + det.cantidad
+        elif det.id_articulo == 12:
+            productos[11] = productos[11] + det.cantidad
+        elif det.id_articulo == 13:
+            productos[12] = productos[12] + det.cantidad
+        elif det.id_articulo == 14:
+            productos[13] = productos[13] + det.cantidad
+        elif det.id_articulo == 15:
+            productos[14] = productos[14] + det.cantidad
+        else:
+            productos[15] = productos[15] + det.cantidad
 
 
 

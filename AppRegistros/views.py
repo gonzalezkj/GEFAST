@@ -39,5 +39,5 @@ def pdf(request, id):
 
     pdf = pdfkit.from_url('http://127.0.0.1:8000/registros/selectcompra/'+str(t.id), False, options=options)
     response = HttpResponse(pdf, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="documento.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="Registro-'+str(t.id) + '.pdf"'
     return response

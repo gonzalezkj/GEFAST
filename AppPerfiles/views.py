@@ -19,7 +19,7 @@ def register(request):
             usuario = authenticate(username=usuario, password=password)
             login(request, usuario)
             messages.success(request, "Te has registrado exitosamente")
-            return redirect(to="login")
+            return redirect(to="home")
         data["form"] = formulario
     
     return render(request, 'registration/register.html', data)
