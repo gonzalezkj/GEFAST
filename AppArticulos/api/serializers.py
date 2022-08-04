@@ -7,7 +7,7 @@ class ArticuloSerializer(ModelSerializer):
     class Meta:
         model = Articulo
         fields = ['id_articulo','cantidad','nombre', 'precio', 'disponibilidad', 'categoria']
-
+        
     def to_representation(self, instance):
         return {
             'id_articulo': instance.id_articulo,
