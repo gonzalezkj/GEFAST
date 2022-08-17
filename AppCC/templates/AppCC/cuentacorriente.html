@@ -1,0 +1,54 @@
+{% extends "base/base.html" %}
+{% load static %}   
+{% block content %}  
+
+
+
+<div class="cregistro">
+    <p style="background-color: #012E40; color: white; width: 500px; border: solid white 2px">CUENTA CORRIENTE PROVEEDORES</p>
+    <div class="tproveedor">
+        <form action="{% url 'CC' %}"  method="GET">
+        <table class="tbproveedor">
+            <p style="background-color: #012E40; color: white; width: 150px; border: solid white 2px">FILTRAR POR: </p>
+            <select name="razonsocial" style="width: 120px; text-align: center; margin-bottom: 40px;" aria-label="Default select example">
+            {% for x in p %}
+                    <option>{{ x.razon_social }}</option>
+            {% endfor %}
+            </select>
+            <input type="submit" name="" value="click" id="">
+            <thead class="thproveedor">
+                <th class="celdareg">Razon social</th>        
+                <th class="celdareg">Tipo comprobante</th>
+                <th class="celdareg">Fecha</th>  
+                <th class="celdareg">Monto</th>
+            </thead>
+            <tbody class="bodyproveedor">
+                {% if prov %}
+                    {% if compro %}
+                        {% if tipo %} 
+                            {% for proveedores in prov %}
+                                {% for comprobantes in compro %}
+                                    {% if comprobantes.id_proveedor == proveedores.id_proveedor %}
+                                        {% for x in tipo %}
+                                            {% if comprobantes.id_tipo_comprobante == x.id_tipo_comprobante %}
+                                                <tr>
+                                                    <td class="celdareg">{{ proveedores.razon_social }}</td>
+                                                    <td class="celdareg">{{ x.nombre }} {{ x.letra }}  </td>
+                                                    <td class="celdareg">{{ comprobantes.created | date:"M d, Y" }}</td>
+                                                    <td class="celdareg">{{ comprobantes.monto_total }}</td>           
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %} 
+                    {% endif %}
+                {% endif %}
+            </tbody>
+        </table>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

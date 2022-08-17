@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'AppABM',
     'AppOrdenes',
     'AppNav',
+    'AppCC',
     
     #Aplicaciones de proveedores
     'AppAgregarProv',

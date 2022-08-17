@@ -551,6 +551,29 @@
     text-align: -webkit-center;
 }
 
+.tproveedor{
+    margin-top: 70px;
+    height: 400px;
+}
+
+.tbproveedor{
+    background-color: #F2E3D5;
+    color: rgb(0, 0, 0);
+    border: solid white;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block;
+    width: fit-content;
+    height: 400px;
+}
+
+.thproveedor{
+    background-color: #012E40;
+    color: white;
+    position: absolute;
+    display: block;
+}
+
 /* HTML DE ABM */ 
 
 .todo{

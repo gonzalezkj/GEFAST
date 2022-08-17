@@ -34,8 +34,6 @@ def stock(request):
     return render(request, "AppStock/stock.html",  {"cat":categoria, "art":articulo})
 
 
-#NO PUDE FILTRAR POR CATEGORIA PORQUE VIENE DEL OTRO MODEL
-
 @login_required
 def precio(request):
     articulo = Articulo.objects.all()
